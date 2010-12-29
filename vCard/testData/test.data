@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Vredestein;Karel;;;
+FN:Karel Vredestein
+TEL;type=CELL;type=pref:0641267305
+GEO:37.386013;-122.082932
+item1.ADR;type=HOME;type=pref:;;Stommewaal 43e;;;;
+item1.X-ABADR:nl
+X-ABUID:F5775708-ACB9-40B0-AB94-7DD11FED330F\:ABPerson
+END:VCARD
