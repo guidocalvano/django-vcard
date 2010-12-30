@@ -18,6 +18,10 @@ class Contact( models.Model ) :
         do I pick sensible full names, making the code more readable
         do I use the vCard names, making it easier to realte the code to the original vCard
     """
+    
+    # BUG: This would prevents this model from ever being created
+    # from anything else than a string. Perhaps you want something like
+    # vCardString=None.
     def __init__( self, vCardString ) :
         
         self.fromString( vCardString )
@@ -63,7 +67,7 @@ class Contact( models.Model ) :
         for m in childModels :
              m.save()
     
-    
+    # NOTE: Not sure if we want this feature.
     def fromString( vCardString ) :
         
         vObject = vobject.readOne( vCardString ) 
@@ -89,6 +93,7 @@ class Contact( models.Model ) :
     def __eq__(self, other) : 			# this should compare the objects for equality
         return self.__dict__ == other.__dict__
     
+    # BUG: Syntax error. Also, put this in `tests.py`, where it belongs.
     def testString( vCard )
         """
         Rather than making sure import export goes correctly 
@@ -127,6 +132,9 @@ class Contact( models.Model ) :
         return True
     
     # required
+    
+    # NOTE: Make sure the code is Python PEP8 compliant, for readability.
+    # http://pypi.python.org/pypi/pep8
     
     fn     = models.CharField( max_length=1024, unique = True, blank = False, null=False verbose_name = "Formatted Name", help_text = "The formatted name string associated with the vCard object" )   # 1
     n      = models.OneToOneField( N, unique = True, blank = False, null = False, verbose_name="Name", help_text="A structured representation of the name of the person, place or thing associated with the vCard object." ) 
@@ -184,7 +192,8 @@ class N( models.Model )
     honorific_prefix = models.CharField( max_length = 1024, verbose_name = "Honorific Prefix" )
     honorific_suffix = models.CharField( max_length = 1024, verbose_name = "Honorific Suffix" )
 
-
+# BUG: Syntax error. Forgot the :'s.
+# Also, make sure eache class has a docstring telling what is represents
 class Tel( models.model )
     
     contact = models.ForeignKey( Contact, primary_key=True )
