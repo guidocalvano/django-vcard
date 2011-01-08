@@ -1,0 +1,52 @@
+
+Een V achter de taak geeft aan dat het af is.
+Een 1/2 achter de taak betekent dat ik halverwege ben
+
+Taken staan niet indented
+Comments over taken staan wel indented
+
+
+
+
+naar nieuwe git repo
+
+date issue
+
+org issue -> kijkt mathijs nog naar
+
+
+geïnternationaliseerde (zie Django docs) verbose_name geeft
+
+django-extensions graph_models
+
+admin 
+
+ 	inclusief onetomany
+
+	view voor uploaden vcard
+
+
+
+GPL, LGPL of AGPL
+
+   Moet nog even kiezen wat practisch is
+   Wat mij betreft is alles wel prima
+
+setup									1/2
+
+	opzet file, moet nog testen, admin houd ik ook nog geen rekening mee
+
+
+
+README.rst (reStructuredText) 			 			V
+
+convertTo								V
+        gedaan als importFrom
+                   exportTo
+
+gitignore								V
+
+pep8									V
+
+ gebruikte commando om whitespace om id's toe te staan;
+ pep8 -r --count --ignore=E201,E202,E221,E251 django_vcard.py
