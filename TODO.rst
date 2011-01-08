@@ -30,5 +30,6 @@ Tasks
 14. pep8 _done_
     gebruikte commando om whitespace om id's toe te staan;
     `pep8 -r --count --ignore=E201,E202,E221,E251 django_vcard.py`
+15. Remove application files in root directory (`manage.py`, `urls.py`, `templates`, `*.pyc`, etc.)
 
 
