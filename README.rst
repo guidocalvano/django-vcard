@@ -5,31 +5,29 @@ This document briefly describes installation, dependencies and use of django-vca
 
 The django-vcard library offers;
 
-    Contact
+Contact
 
-        A Django Model for representing vCards
-        A Contact can be imported and exported to and from both vCard strings and vobjects
+* A Django Model for representing vCards
+* A Contact can be imported and exported to and from both vCard strings and vobjects
 
 Install
 -------
 
-    Just type the following in the commandline:
+Just type the following in the commandline::
     
-        ``pip install -e -e git+http://github.com/guidocalvano/django-vcard.git#egg=django-vcard``
+    pip install -e git+http://github.com/guidocalvano/django-vcard.git#egg=django-vcard
+
 
 Dependencies
 -------------
  
 vObject 
 
-       documentation at http://vobject.skyhouseconsulting.com/ 
-
-       download at http://pypi.python.org/pypi/vobject
+* Documentation at http://vobject.skyhouseconsulting.com/ 
+* Install with `pip install vobject`
 
 Use
 ---
-
-
 Create a new Contact object;
 
 ``c = Contact()``
