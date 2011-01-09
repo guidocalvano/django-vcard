@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title> Test vCard here </title>
+</head>
+<body>
+
+<p> Enter vCard here and submit to get an hCard </p>
+<form method="post" action="/testVCard/" >
+{% csrf_token %}
+<textarea name="input" rows="20" cols="80">
+{{input}}
+</textarea>
+<input type="submit" value="To hCard!"/><input type="reset"/>
+
+</form>
+
+<p>
+{{output}}
+</p>
+
+</body>
+</html>
