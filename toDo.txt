@@ -7,23 +7,20 @@ Comments over taken staan wel indented
 
 
 
-
-naar nieuwe git repo
-
 date issue
 
 org issue -> kijkt mathijs nog naar
 
 
-geïnternationaliseerde (zie Django docs) verbose_name geeft
+geïnternationaliseerde (zie Django docs) verbose_name
 
-django-extensions graph_models
+django-extensions graph_models					V
 
 admin 
 
- 	inclusief onetomany
+ 	inclusief onetomany					V
 
-	view voor uploaden vcard
+	view voor uploaden vcard				
 
 
 
@@ -36,7 +33,7 @@ setup									1/2
 
 	opzet file, moet nog testen, admin houd ik ook nog geen rekening mee
 
-
+naar nieuwe git repo							V
 
 README.rst (reStructuredText) 			 			V
 
