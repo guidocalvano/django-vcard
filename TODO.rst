@@ -32,6 +32,14 @@ Tasks
     `pep8 -r --count --ignore=E201,E202,E221,E251 django_vcard.py`
 15. Remove application files in root directory (`manage.py`, `urls.py`, `templates`, `*.pyc`, etc.) **done**
 16. Unittests from `vcard/models.py` to `vcard/tests/__init__.py`
-
-
+17. Sensible data types for (at least):
+    * URL (URLField)
+    * Timezone (int, I believe - see what vobject returns)
+    * Photo, Sound, Logo (blob/binary field?)
+    * Note (TextField)
+    * Address, email and tel type (ChoiceField)
+    * Geo (maybe Lat/lon. - otherwise leave as a string)
+    * Email (EmailField)
+    * Bday (DateField)
+    * Rev (Integer, maybe?)
 
