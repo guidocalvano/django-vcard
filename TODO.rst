@@ -42,4 +42,15 @@ Tasks
     * Email (EmailField)
     * Bday (DateField)
     * Rev (Integer, maybe?)
+18. Docstrings for at least all the models, and some of the main functions.
+    From the docstring the following things should roughly be clear:
+    
+    1. What does the function do (semantically, not algorithmically)
+       
+       Something like: "It eats bananas." 
+       
+       NOT: "It uses enzymes do digest such and such carbonhydrates etc. etc."
+    2. What does it return (if it returns anything at all).
+    3. What the meaning of eventual parameters are, especially if they're not
+       downright evident.
 
