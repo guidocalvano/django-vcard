@@ -28,13 +28,14 @@ def vcf_file_view(request,contact_set):
     theFile = StringIO.StringIO()
 
     theFile.write( vcf_file_content ) 
-
+    theFile.seek( 0 )
+    
     response = HttpResponse(FileWrapper(theFile), mimetype='application/force-download')
     response['Content-Disposition'] = 'attachment; filename=vcf_file.vcf'
 
     return response
 
-
+vcf_file_view = staff_member_required(vcf_file_view)
 
 def loadFile(request):
     
