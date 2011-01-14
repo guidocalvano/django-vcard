@@ -5,7 +5,7 @@ from vcard.admin_views import *
 import vcard
 
 class NInline(admin.StackedInline):
-    model = N
+    model = vcard.models.N
     extra = 1
 
 
