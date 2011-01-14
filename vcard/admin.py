@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.http import HttpResponseRedirect, HttpResponse
 from vcard.admin_views import *
 import vcard
+from django.shortcuts import render_to_response
 
 class NInline(admin.StackedInline):
     model = vcard.models.N
@@ -116,5 +117,43 @@ class ContactAdmin(admin.ModelAdmin):
     
     fields = ['n','fn', 'bday', 'classP', 'rev', 'sort_string','uid']
     inlines = [TelInline, EmailInline, AdrInline, TitleInline, OrgInline, AgentInline, CategoryInline, KeyInline, LabelInline,LogoInline, NicknameInline, MailerInline, NoteInline, PhotoInline, RoleInline, SoundInline, TzInline, UrlInline, GeoInline]
+    
+    def get_urls(self):
+        urls = super(ContactAdmin, self).get_urls()
+        my_urls = patterns('',
+            (r'^uploadVCF/$', self.uploadVCF)
+            (r'^selectVCF/$', self.selectVCF)
+        )
+        return my_urls + urls
+
+    def uploadVCF( request ):
+        
+        newContactList = []
+
+        try:
+
+            for f in request.FILES :
+
+                for o in vobject.readComponents( f )
+
+                    c = Contact()
+
+                    c.importFrom( o, "vObject" ) 
+
+                    newContactList.append( c )
+
+         except:
+
+            for e in newContactList :
+
+                e.delete() # should remove linked values as well...
+
+            return HttpResponse( "Error in vcf file" )  
+
+        return HttpResponseRedirect( 'admin/Contact' )
+
+    def selectVCF( request ):
+        return render_to_response( 'vcard/templates/admin/selectVCF.html' )
+        
 
 admin.site.register(Contact, ContactAdmin)
