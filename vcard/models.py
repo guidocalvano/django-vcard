@@ -472,7 +472,7 @@ thing associated with the vCard object." )
 
 class N( models.Model ):
 
-    contact = models.ForeignKey( Contact, primary_key = True )
+    # contact = models.ForeignKey( Contact, primary_key = True, unique=True )
 
     family_name      = models.CharField( max_length = 1024,
                                          verbose_name = "Family Name" )
