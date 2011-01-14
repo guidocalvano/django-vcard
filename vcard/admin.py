@@ -142,7 +142,7 @@ class ContactAdmin(admin.ModelAdmin):
 
                     newContactList.append( c )
 
-         except:
+        except:
 
             for e in newContactList :
 
