@@ -106,7 +106,7 @@ to_vcf_file.short_description = "Create vcf file with marked objects"
 
 class ContactAdmin(admin.ModelAdmin):
     
-    actions = ['vcf_file' ]
+    actions = ['to_vcf_file' ]
     
     fields = ['n','fn', 'bday', 'classP', 'rev', 'sort_string','uid']
     inlines = [TelInline, EmailInline, AdrInline, TitleInline, OrgInline, AgentInline, CategoryInline, KeyInline, LabelInline,LogoInline, NicknameInline, MailerInline, NoteInline, PhotoInline, RoleInline, SoundInline, TzInline, UrlInline, GeoInline]
