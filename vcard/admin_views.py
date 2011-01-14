@@ -6,6 +6,7 @@ from vobject.vcard import *
 from django.shortcuts import render_to_response
 import StringIO
 from django.http import HttpResponse
+from django.core.servers.basehttp import FileWrapper
 
 def select(request):
     return render_to_response(
