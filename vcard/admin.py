@@ -4,6 +4,11 @@ from django.http import HttpResponseRedirect, HttpResponse
 from vcard.admin_views import *
 import vcard
 
+class NInline(admin.StackedInline):
+    model = N
+    extra = 1
+
+
 class TelInline(admin.StackedInline):
     model = Tel
     extra = 1
@@ -109,7 +114,7 @@ class ContactAdmin(admin.ModelAdmin):
     
     actions = [ to_vcf_file ]
     
-    fields = ['n','fn', 'bday', 'classP', 'rev', 'sort_string','uid']
-    inlines = [TelInline, EmailInline, AdrInline, TitleInline, OrgInline, AgentInline, CategoryInline, KeyInline, LabelInline,LogoInline, NicknameInline, MailerInline, NoteInline, PhotoInline, RoleInline, SoundInline, TzInline, UrlInline, GeoInline]
+    fields = ['fn', 'bday', 'classP', 'rev', 'sort_string','uid']
+    inlines = [N,TelInline, EmailInline, AdrInline, TitleInline, OrgInline, AgentInline, CategoryInline, KeyInline, LabelInline,LogoInline, NicknameInline, MailerInline, NoteInline, PhotoInline, RoleInline, SoundInline, TzInline, UrlInline, GeoInline]
 
 admin.site.register(Contact, ContactAdmin)
