@@ -430,7 +430,7 @@ class Contact(models.Model):
      verbose_name = "Formatted Name",
      help_text = "The formatted name string associated with the vCard object" )
 
-     n = models.OneToOneField( 'N',
+    n = models.OneToOneField( 'N',
         unique = True,
         blank = False,
         null = False,
