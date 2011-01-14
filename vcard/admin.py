@@ -6,7 +6,7 @@ import vcard
 
 class NInline(admin.StackedInline):
     model = vcard.models.N
-    extra = 1
+    max_num = 1
 
 
 class TelInline(admin.StackedInline):
@@ -114,7 +114,7 @@ class ContactAdmin(admin.ModelAdmin):
     
     actions = [ to_vcf_file ]
     
-    fields = ['n','fn', 'bday', 'classP', 'rev', 'sort_string','uid']
-    inlines = [TelInline, EmailInline, AdrInline, TitleInline, OrgInline, AgentInline, CategoryInline, KeyInline, LabelInline,LogoInline, NicknameInline, MailerInline, NoteInline, PhotoInline, RoleInline, SoundInline, TzInline, UrlInline, GeoInline]
+    fields = ['fn', 'bday', 'classP', 'rev', 'sort_string','uid']
+    inlines = [NInline, TelInline, EmailInline, AdrInline, TitleInline, OrgInline, AgentInline, CategoryInline, KeyInline, LabelInline,LogoInline, NicknameInline, MailerInline, NoteInline, PhotoInline, RoleInline, SoundInline, TzInline, UrlInline, GeoInline]
 
 admin.site.register(Contact, ContactAdmin)
