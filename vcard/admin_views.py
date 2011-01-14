@@ -8,13 +8,6 @@ import StringIO
 from django.http import HttpResponse
 from django.core.servers.basehttp import FileWrapper
 
-def select(request):
-    return render_to_response(
-        "admin/vCard/uploadVCard.html",
-        {},
-        RequestContext(request, {}),
-    )
-select = staff_member_required(select)
 
 
 def vcf_file_view(request,contact_set):
@@ -38,13 +31,3 @@ def vcf_file_view(request,contact_set):
 
 vcf_file_view = staff_member_required(vcf_file_view)
 
-def loadFile(request):
-    
-    
-    
-    return render_to_response(
-        "admin/vCard/uploadVCard.html",
-        {},
-        RequestContext(request, {}),
-    )
-loadFile = staff_member_required(loadFile)
