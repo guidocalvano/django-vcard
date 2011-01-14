@@ -1,4 +1,4 @@
-from vCard.models import *
+from vcard.models import *
 from django.contrib import admin
 
 
