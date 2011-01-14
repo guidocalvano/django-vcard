@@ -2,6 +2,7 @@ from vcard.models import *
 from django.contrib import admin
 from django.http import HttpResponseRedirect, HttpResponse
 from vcard.admin_views import *
+import vcard
 
 class TelInline(admin.StackedInline):
     model = Tel
