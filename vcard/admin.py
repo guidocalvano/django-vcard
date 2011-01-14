@@ -132,9 +132,9 @@ class ContactAdmin(admin.ModelAdmin):
 
         try:
 
-            for f in request.FILES :
+            for f in request.FILES:
 
-                for o in vobject.readComponents( f )
+                for o in vobject.readComponents( f ):
 
                     c = Contact()
 
