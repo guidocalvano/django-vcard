@@ -154,7 +154,7 @@ class ContactAdmin(admin.ModelAdmin):
         return HttpResponseRedirect( 'admin/Contact' )
 
     def selectVCF( self, request ):
-        return render_to_response( 'vcard/templates/admin/selectVCF.html' )
+        return render_to_response( 'admin/selectVCF.html' )
         
 
 admin.site.register(Contact, ContactAdmin)
