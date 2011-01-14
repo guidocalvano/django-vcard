@@ -5,6 +5,7 @@ import vobject
 from vobject.vcard import *
 from django.shortcuts import render_to_response
 import StringIO
+from django.http import HttpResponse
 
 def select(request):
     return render_to_response(
