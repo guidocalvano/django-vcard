@@ -122,12 +122,12 @@ class ContactAdmin(admin.ModelAdmin):
     def get_urls(self):
         urls = super(ContactAdmin, self).get_urls()
         my_urls = patterns('',
-            (r'^uploadVCF/$', 'self.uploadVCF')
-            (r'^selectVCF/$', 'self.selectVCF')
+            (r'^uploadVCF/$', self.uploadVCF )
+            (r'^selectVCF/$', self.selectVCF )
         )
         return my_urls + urls
 
-    def uploadVCF( request ):
+    def uploadVCF( self, request ):
         
         newContactList = []
 
@@ -153,7 +153,7 @@ class ContactAdmin(admin.ModelAdmin):
 
         return HttpResponseRedirect( 'admin/Contact' )
 
-    def selectVCF( request ):
+    def selectVCF( self, request ):
         return render_to_response( 'vcard/templates/admin/selectVCF.html' )
         
 
