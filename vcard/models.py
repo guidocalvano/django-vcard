@@ -430,14 +430,14 @@ class Contact(models.Model):
      verbose_name = "Formatted Name",
      help_text = "The formatted name string associated with the vCard object" )
 
-    n = models.OneToOneField( 'N',
-        unique = True,
-        blank = False,
-        null = False,
-        verbose_name="Name",
-        help_text="A structured representation \
-of the name of the person, place or \
-thing associated with the vCard object." )
+    # n = models.OneToOneField( 'N',
+    #     unique = True,
+    #     blank = False,
+    #     null = False,
+    #     verbose_name="Name",
+    #     help_text="A structured representation \
+    # of the name of the person, place or \
+    # thing associated with the vCard object." )
 
     bday   = models.CharField(
        max_length = 256,
@@ -472,7 +472,7 @@ thing associated with the vCard object." )
 
 class N( models.Model ):
 
-    # contact = models.ForeignKey( Contact, primary_key = True )
+    contact = models.ForeignKey( Contact, primary_key = True )
 
     family_name      = models.CharField( max_length = 1024,
                                          verbose_name = "Family Name" )
