@@ -1,7 +1,7 @@
 from vcard.models import *
 from django.contrib import admin
 from django.http import HttpResponseRedirect, HttpResponse
-
+from vcard.admin_views import *
 
 class TelInline(admin.StackedInline):
     model = Tel
@@ -98,7 +98,7 @@ class UrlInline(admin.StackedInline):
     extra = 1
 
 def to_vcf_file(modeladmin, request, queryset):
-    return vcard.admin_views.to_vcf_file( request, queryset )
+    return vcf_file_view( request, queryset )
 
 to_vcf_file.short_description = "Create vcf file with marked objects"
 
