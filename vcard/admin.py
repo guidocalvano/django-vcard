@@ -44,7 +44,7 @@ class KeyInline(admin.StackedInline):
 
 
 class LabelInline(admin.StackedInline):
-    model = Label
+    model = vcard.models.Label
     extra = 1
 
 
@@ -69,7 +69,7 @@ class NoteInline(admin.StackedInline):
 
 
 class PhotoInline(admin.StackedInline):
-    model = Photo
+    model = vcard.models.Photo
     extra = 1
 
 
