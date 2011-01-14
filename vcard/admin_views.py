@@ -21,7 +21,7 @@ def vcf_file_view(request,contact_set):
 
     for c in contact_set :
 
-        vcf_file_content = vcf_file_content + c.convertTo( 'vCard' )
+        vcf_file_content = vcf_file_content + c.exportTo( 'vCard' )
 
 #     theFile = StringIO.StringIO()
 
