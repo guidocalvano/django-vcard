@@ -122,8 +122,8 @@ class ContactAdmin(admin.ModelAdmin):
     def get_urls(self):
         urls = super(ContactAdmin, self).get_urls()
         my_urls = patterns('',
-            (r'^uploadVCF/$', self.uploadVCF)
-            (r'^selectVCF/$', self.selectVCF)
+            (r'^uploadVCF/$', 'self.uploadVCF')
+            (r'^selectVCF/$', 'self.selectVCF')
         )
         return my_urls + urls
 
