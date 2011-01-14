@@ -4,7 +4,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 import vobject
 from vobject.vcard import *
 from django.shortcuts import render_to_response
-# import StringIO
+import StringIO
 
 def select(request):
     return render_to_response(
