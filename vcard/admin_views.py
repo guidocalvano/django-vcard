@@ -23,7 +23,7 @@ def vcf_file_view(request,contact_set):
 
         vcf_file_content = vcf_file_content + c.exportTo( 'vCard' )
 
-#     theFile = StringIO.StringIO()
+    theFile = StringIO.StringIO()
 
     theFile.write( vcf_file_content ) 
 
