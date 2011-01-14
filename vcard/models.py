@@ -430,14 +430,14 @@ class Contact(models.Model):
      verbose_name = "Formatted Name",
      help_text = "The formatted name string associated with the vCard object" )
 
-    # n = models.OneToOneField( 'N',
-    #     unique = True,
-    #     blank = False,
-    #     null = False,
-    #     verbose_name="Name",
-    #     help_text="A structured representation \
-    # of the name of the person, place or \
-    # thing associated with the vCard object." )
+     n = models.OneToOneField( 'N',
+        unique = True,
+        blank = False,
+        null = False,
+        verbose_name="Name",
+        help_text="A structured representation \
+of the name of the person, place or \
+thing associated with the vCard object." )
 
     bday   = models.CharField(
        max_length = 256,
