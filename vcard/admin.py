@@ -114,7 +114,7 @@ class ContactAdmin(admin.ModelAdmin):
     
     actions = [ to_vcf_file ]
     
-    fields = ['fn', 'bday', 'classP', 'rev', 'sort_string','uid']
+    fields = ['n','fn', 'bday', 'classP', 'rev', 'sort_string','uid']
     inlines = [TelInline, EmailInline, AdrInline, TitleInline, OrgInline, AgentInline, CategoryInline, KeyInline, LabelInline,LogoInline, NicknameInline, MailerInline, NoteInline, PhotoInline, RoleInline, SoundInline, TzInline, UrlInline, GeoInline]
 
 admin.site.register(Contact, ContactAdmin)
