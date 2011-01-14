@@ -31,7 +31,7 @@ def vcf_file_view(request,contact_set):
     theFile.seek( 0 )
     
     print( "vcf_file_content " + vcf_file_content )
-    print( " StringIO content " + theFile.getvalue )
+    print( " StringIO content " + theFile.getvalue() )
     response = HttpResponse(FileWrapper(theFile), mimetype='application/force-download')
     response['Content-Disposition'] = 'attachment; filename=vcf_file.vcf'
 
