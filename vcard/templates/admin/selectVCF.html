@@ -1,0 +1,15 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+<title>Select VCF</title>
+</head>
+<body><
+form method="post" enctype="multipart/form-data" action="uploadVCF">
+{% csrf %}
+Select vcf file: <input type="file" name="upfile"/><br/>
+<input type="submit" value="Submit"/><br/>
+</form>
+</body>
+</html>
