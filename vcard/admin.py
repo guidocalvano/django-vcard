@@ -5,6 +5,8 @@ from vcard.admin_views import *
 import vcard
 from django.shortcuts import render_to_response
 from django.conf.urls.defaults import *
+from django.utils.translation import ugettext
+
 
 class NInline(admin.StackedInline):
     model = vcard.models.N
