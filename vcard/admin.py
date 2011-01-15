@@ -116,6 +116,8 @@ class ContactAdmin(admin.ModelAdmin):
     
     actions = [ to_vcf_file ]
     
+    list_display = ( 'selectVCFLink' )
+
     fields = ['n','fn', 'bday', 'classP', 'rev', 'sort_string','uid']
     inlines = [TelInline, EmailInline, AdrInline, TitleInline, OrgInline, AgentInline, CategoryInline, KeyInline, LabelInline,LogoInline, NicknameInline, MailerInline, NoteInline, PhotoInline, RoleInline, SoundInline, TzInline, UrlInline, GeoInline]
     
@@ -135,7 +137,11 @@ class ContactAdmin(admin.ModelAdmin):
 
             for f in request.FILES:
 
-                for o in vobject.readComponents( f ):
+                s = f.read()
+
+                print s
+
+                for o in vobject.readComponents( s ):
 
                     c = Contact()
 
@@ -152,6 +158,12 @@ class ContactAdmin(admin.ModelAdmin):
             return HttpResponse( "Error in vcf file" )  
 
         return HttpResponseRedirect( 'admin/Contact' )
+
+    def selectVCFLink( self ):
+
+        return '<a href="../newsletter/%s/">%s</a>' % (obj.newsletter.id, obj.newsletter)
+    selectVCFLink.short_description = ugettext('Select VCF')
+    selectVCFLink.allow_tags = True 
 
     def selectVCF( self, request ):
         return render_to_response( 'admin/selectVCF.html', context_instance=RequestContext(request) )
