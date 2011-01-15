@@ -118,9 +118,9 @@ class ContactAdmin(admin.ModelAdmin):
     
     actions = [ to_vcf_file ]
     
-    list_display = ( 'selectVCFLink' )
+    # list_display = ( 'selectVCFLink' )
 
-    fields = ['n','fn', 'bday', 'classP', 'rev', 'sort_string','uid']
+    fields = ['selectVCFLink' ,'n','fn', 'bday', 'classP', 'rev', 'sort_string','uid']
     inlines = [TelInline, EmailInline, AdrInline, TitleInline, OrgInline, AgentInline, CategoryInline, KeyInline, LabelInline,LogoInline, NicknameInline, MailerInline, NoteInline, PhotoInline, RoleInline, SoundInline, TzInline, UrlInline, GeoInline]
     
     def get_urls(self):
