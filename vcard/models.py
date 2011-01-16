@@ -290,7 +290,7 @@ class Contact(models.Model):
 
         nObject.save()
 
-        self.n = nObject
+        # self.n = nObject
         self.save()
 
         for m in childModels:
@@ -315,11 +315,11 @@ class Contact(models.Model):
         n = v.add('n')
 
         n.value = vobject.vcard.Name(
-               given = self.n.given_name,
-               family = self.n.family_name,
-               additional = self.n.additional_name,
-               prefix = self.n.honorific_prefix,
-               suffix = self.n.honorific_suffix )
+               given = self.n_set.all()[0].given_name,
+               family = self.n_set.all()[0].family_name,
+               additional = self.n_set.all()[0].additional_name,
+               prefix = self.n_set.all()[0].honorific_prefix,
+               suffix = self.n_set.all()[0].honorific_suffix )
 
         fn = v.add('fn')
 
@@ -456,7 +456,7 @@ class Contact(models.Model):
      null=False,
      verbose_name = _("Formatted Name"),
      help_text = _("The formatted name string associated with the vCard object" ) )
-
+    """
     n = models.OneToOneField( 'N',
         unique = True,
         blank = False,
@@ -465,7 +465,7 @@ class Contact(models.Model):
         help_text=_("A structured representation \
 of the name of the person, place or \
 thing associated with the vCard object.") )
-
+    """
     # bday can be formulated in various ways
     # some ways are dates, but according 
     # to the vcard specs 'koninginnendag'
@@ -513,7 +513,7 @@ class N( models.Model ):
         verbose_name = _("name")
         verbose_name_plural = _("names")
 
-    # contact = models.ForeignKey( Contact, primary_key = True, unique=True )
+    contact = models.ForeignKey( Contact, primary_key = True, unique=True )
 
     family_name      = models.CharField( max_length = 1024,
                                          verbose_name = _( "Family Name" ))
