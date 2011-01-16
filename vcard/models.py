@@ -836,7 +836,6 @@ class Url( models.Model ):
     """
     A Url associted with a contact.
     """
-    """
     class Meta:
         verbose_name = _("url")
         verbose_name_plural = _("url's")
