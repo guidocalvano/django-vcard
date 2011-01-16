@@ -545,7 +545,7 @@ class Tel( models.Model ):
     # types of phone number are allowed by the vcard specs.
     type  = models.CharField( max_length=30,
                               verbose_name=_("type of phone number"),
-                              help_text="_(for instance WORK or HOME" ))
+                              help_text=_("for instance WORK or HOME" ))
     value = models.CharField( max_length=100, 
                               verbose_name=_("value") )
 
