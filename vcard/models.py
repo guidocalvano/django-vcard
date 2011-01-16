@@ -379,7 +379,7 @@ class Contact(models.Model):
 
         if( self.rev ):
             i = v.add( 'rev' )
-            i.value = str( int( time.mktime( self.rev.timetuple() ) ) )
+            i.value = str( int( mktime( self.rev.timetuple() ) ) )
 
         if( self.sort_string ):
             i = v.add( 'sort-string' )
