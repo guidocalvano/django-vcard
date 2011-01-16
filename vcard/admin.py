@@ -137,9 +137,9 @@ class ContactAdmin(admin.ModelAdmin):
 
 
 
-        for f in request.FILES:
+#        for f in request.FILES:
 
-                for o in vobject.readComponents( f ):
+        for o in vobject.readComponents( request.FILES[ 'upfile' ] ):
 
                     c = Contact()
 
