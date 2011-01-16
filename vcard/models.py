@@ -192,12 +192,12 @@ class Contact(models.Model):
                 agent.data = property.value
                 childModels.append( agent )
 
-            if( property.name.upper() == "CATEGORY" ):
+            if( property.name.upper() == "CATEGORIES" ):
 
-                category = Category()
-                category.data = property.value
+                categories = Categories()
+                categories.data = property.value
 
-                childModels.append( category )
+                childModels.append( categories )
 
             if( property.name.upper() == "GEO" ):
                 geo = Geo()
@@ -388,8 +388,8 @@ class Contact(models.Model):
             i = v.add('agent' )
             i.value = j.data
 
-        for j in self.category_set.all():
-            i = v.add('category' )
+        for j in self.categories_set.all():
+            i = v.add('categories' )
             i.value = j.data
 
         for j in self.key_set.all():
@@ -572,7 +572,7 @@ class Geo( models.Model ):
     """
     class Meta:
         verbose_name = _("geographic uri")
-        verbose_name_plural = _("geographic uri")
+        verbose_name_plural = _("geographic uri's")
 
     contact = models.ForeignKey( Contact )
 
@@ -641,7 +641,14 @@ class Agent( models.Model ):
     data = models.CharField( max_length=100 )
 
 
-class Category( models.Model ):
+class Categories( models.Model ):
+    """
+    Specifies application category information about the
+    contact.  Also known as "tags".    
+    """
+    class Meta:
+        verbose_name = _("category")
+        verbose_name_plural = _("categories")
 
     contact = models.ForeignKey( Contact )
 
@@ -649,6 +656,13 @@ class Category( models.Model ):
 
 
 class Key( models.Model ):
+    """
+    Specifies a public key or authentication certificate
+    associated with the contact information
+    """
+    class Meta:
+        verbose_name = _("key")
+        verbose_name_plural = _("keys")
 
     contact = models.ForeignKey( Contact )
 
@@ -656,10 +670,17 @@ class Key( models.Model ):
 
 
 class Label( models.Model ):
+    """
+    Formatted text corresponding to a delivery
+    address of the object the vCard represents
+    """
+    class Meta:
+        verbose_name = _("label")
+        verbose_name_plural = _("labels")
 
     contact = models.ForeignKey( Contact )
 
-    data = models.CharField( max_length=100 )
+    data = models.CharField( max_length=2000 )
 
 
 class Logo( models.Model ):
@@ -674,19 +695,37 @@ class Logo( models.Model ):
     out, and wouldn't bother with it. Otherwise it 
     would take a lot of time!
     """
+    class Meta:
+        verbose_name = _("logo")
+        verbose_name_plural = _("logos")
+
     contact = models.ForeignKey( Contact )
 
     data = models.TextField()
 
 
 class Mailer( models.Model ):
+    """
+    No longer supported in draft vcard specificiation of July 12 2010
+    """
+    class Meta:
+        verbose_name = _("mailer")
+        verbose_name_plural = _("mailers")
 
     contact = models.ForeignKey( Contact )
 
-    data = models.CharField( max_length=100 )
+    data = models.CharField( max_length=2000 )
 
 
 class Nickname( models.Model ):
+    """
+    The nickname of the
+    object the vCard represents.
+    """
+    class Meta:
+        verbose_name = _("nickname")
+        verbose_name_plural = _("nicknames")
+
 
     contact = models.ForeignKey( Contact )
 
@@ -694,6 +733,14 @@ class Nickname( models.Model ):
 
 
 class Note( models.Model ):
+    """
+    Supplemental information or a comment that is
+    associated with the vCard.
+    """
+    class Meta:
+        verbose_name = _("note")
+        verbose_name_plural = _("notes")
+
 
     contact = models.ForeignKey( Contact )
 
@@ -712,12 +759,25 @@ class Photo( models.Model ):
     out, and wouldn't bother with it. Otherwise it 
     would take a lot of time!
     """
+    class Meta:
+        verbose_name = _("photo")
+        verbose_name_plural = _("photos")
+
+
     contact = models.ForeignKey( Contact )
 
     data = models.TextField()
 
 
 class Role( models.Model ):
+    """
+    The function or part played in a particular
+    situation by the object the vCard represents.
+    """
+    class Meta:
+        verbose_name = _("role")
+        verbose_name_plural = _("roles")
+
 
     contact = models.ForeignKey( Contact )
 
@@ -736,6 +796,9 @@ class Sound( models.Model ):
     out, and wouldn't bother with it. Otherwise it 
     would take a lot of time!
     """
+    class Meta:
+        verbose_name = _("sound")
+        verbose_name_plural = _("sounds")
     contact = models.ForeignKey( Contact )
 
     data = models.TextField()
@@ -745,6 +808,10 @@ class Title( models.Model ):
     """
     The position or job of the contact
     """
+    class Meta:
+        verbose_name = _("title")
+        verbose_name_plural = _("titles")
+
     contact = models.ForeignKey( Contact )
 
     data = models.CharField( max_length=100 )
@@ -757,6 +824,9 @@ class Tz( models.Model ):
     Tz is represented as a CharField and not in a formal structure because 
     the vcard specification allows city names as tz parameters
     """
+    class Meta:
+        verbose_name = _("time zone")
+        verbose_name_plural = _("time zones")
     contact = models.ForeignKey( Contact )
 
     data = models.CharField( max_length=100 )
@@ -764,8 +834,12 @@ class Tz( models.Model ):
 
 class Url( models.Model ):
     """
-    A Url given by a contact.
+    A Url associted with a contact.
     """
+    """
+    class Meta:
+        verbose_name = _("url")
+        verbose_name_plural = _("url's")
     contact = models.ForeignKey( Contact )
 
     data = models.URLField( verify_exists=False )
