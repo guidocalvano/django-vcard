@@ -151,7 +151,7 @@ class ContactAdmin(admin.ModelAdmin):
 
                     newContactList.append( c )
 
-        except:
+        except as Error:
 
             for e in newContactList :
 
