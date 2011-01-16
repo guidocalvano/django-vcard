@@ -143,7 +143,7 @@ class ContactAdmin(admin.ModelAdmin):
 
                     c = Contact()
 
-                    c.importFrom( o, "vObject" ) 
+                    c.importFrom( "vObject", o ) 
 
                     newContactList.append( c )
 
@@ -155,7 +155,7 @@ class ContactAdmin(admin.ModelAdmin):
 
 #            return HttpResponse( "Error in vcf file" )  
 
-        return HttpResponseRedirect( 'admin/Contact' )
+        return HttpResponseRedirect( '/admin/Contact' )
 
     def selectVCFLink( self ):
 
