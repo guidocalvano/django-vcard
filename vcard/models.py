@@ -102,6 +102,8 @@ class Contact(models.Model):
 
                 nObject = N()
 
+                nObject.contact = self
+
                 nObject.family_name = property.value.family
                 nObject.given_name = property.value.given
                 nObject.additional_name = property.value.additional
