@@ -513,7 +513,7 @@ class N( models.Model ):
         verbose_name = _("name")
         verbose_name_plural = _("names")
 
-    contact = models.ForeignKey( Contact, primary_key = True, unique=True )
+    contact = models.ForeignKey( Contact, unique=True )
 
     family_name      = models.CharField( max_length = 1024,
                                          verbose_name = _( "Family Name" ))
