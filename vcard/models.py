@@ -3,10 +3,7 @@ import os
 from os import *
 import vobject
 from vobject.vcard import *
-import unittest
-
-# Create your models here.
-
+from django.utils.translation import ugettext as _
 
 class Contact(models.Model):
     """
@@ -29,10 +26,24 @@ class Contact(models.Model):
     def __unicode__(self):
         return self.n.__unicode__()
 
+
+    class Meta:
+        verbose_name = _("contact")
+        verbose_name_plural = _("contacts")
+
     # functionality
     def importFrom( self, type, data ):
         """
+	The contact sets its properties as specified in the argument 'data'
+        according to the specification given in the string passed as 
+        argument 'type'
 
+        'type' can be either 'vCard' or 'vObject'
+
+        'vCard' is a string containing containing contact information
+        formatted according to the vCard specification
+
+        'vObject' is a vobject containing vcard contact information 
         """
         if( type == "vCard" ):
             self.fromVCard( data )
@@ -44,7 +55,15 @@ class Contact(models.Model):
 
     def exportTo( self, type ):
         """
+	The contact returns an object with its properties in a format as 
+        defined by the argument type.
 
+        'type' can be either 'vCard' or 'vObject'
+
+        'vCard' is a string containing containing contact information
+        formatted according to the vCard specification
+
+        'vObject' is a vobject containing vcard contact information 
         """
         if( type == "vCard" ):
             return self.toVCard()
@@ -54,7 +73,8 @@ class Contact(models.Model):
 
     def fromVObject( self, vObject ):
         """
-
+        Contact sets its properties as specified by the supplied
+        vObject.
         """
         properties = vObject.getChildren()
 
@@ -278,13 +298,18 @@ class Contact(models.Model):
             m.save()
 
     def fromVCard( self, vCardString ):
-
+        """
+        Contact sets its properties as specified by the supplied
+        string. The string is in vCard format.
+        """
         vObject = vobject.readOne( vCardString )
 
         self.fromVObject( vObject )
 
     def toVObject( self ):
-
+        """
+        returns a cast of the Contact to vobject 
+        """
         v = vobject.vCard()
 
         n = v.add('n')
@@ -414,7 +439,9 @@ class Contact(models.Model):
         return v
 
     def toVCard( self):
-
+        """
+        returns a cast of the Contact to a string in vCard format. 
+        """
         return self.toVObject().serialize()
 
     # primary key
@@ -427,130 +454,187 @@ class Contact(models.Model):
      max_length=1024,
      blank = False,
      null=False,
-     verbose_name = "Formatted Name",
-     help_text = "The formatted name string associated with the vCard object" )
+     verbose_name = _("Formatted Name"),
+     help_text = _("The formatted name string associated with the vCard object" ) )
 
     n = models.OneToOneField( 'N',
         unique = True,
         blank = False,
         null = False,
-        verbose_name="Name",
-        help_text="A structured representation \
+        verbose_name=_("Name"),
+        help_text=_("A structured representation \
 of the name of the person, place or \
-thing associated with the vCard object." )
+thing associated with the vCard object.") )
 
+    # bday can be formulated in various ways
+    # some ways are dates, but according 
+    # to the vcard specs 'koninginnendag'
+    # is perfectly fine. That is why bday
+    # is stored as a CharField
     bday   = models.CharField(
        max_length = 256,
        blank = True,
        null=True,
-       verbose_name = "Birthday" )
+       verbose_name = _("Birthday" ) )
 
     classP        = models.CharField(
        max_length = 256,
        blank = True,
        null=True,
-       verbose_name = "Class" )
+       verbose_name = _("Class" ) )
 
-    rev           = models.CharField(
-       max_length = 256,
+    rev           = models.DateTimeField(
        blank = True,
        null=True,
-       verbose_name = "Last Revision" )
+       verbose_name = _("Last Revision" ) )
 
     sort_string   = models.CharField(
        max_length = 256,
        blank = True,
        null=True,
-       verbose_name = "Sort String")
+       verbose_name = _("Sort String") )
 
+    # a uid is a URI. A URI consists of both
+    # a URL and a URN. So using a URLField is 
+    # incorrect. Given that no URIField is available
+    # a common CharField was used
     uid           = models.CharField(
        max_length = 256,
        blank = True,
        null=True,
-       verbose_name = "Unique Identifier" )
+       verbose_name = _("Unique Identifier" ) )
 
 
 class N( models.Model ):
+    """
+    The name of a contact
+    """
+    class Meta:
+        verbose_name = _("name")
+        verbose_name_plural = _("names")
 
     # contact = models.ForeignKey( Contact, primary_key = True, unique=True )
 
     family_name      = models.CharField( max_length = 1024,
-                                         verbose_name = "Family Name" )
+                                         verbose_name = _( "Family Name" ))
     given_name       = models.CharField( max_length = 1024,
-                                         verbose_name = "Given Name" )
+                                         verbose_name = _("Given Name" ))
     additional_name   = models.CharField( max_length = 1024,
-                                          verbose_name = "Additional Name" )
+                                          verbose_name = _("Additional Name" ))
     honorific_prefix = models.CharField( max_length = 1024,
-                                         verbose_name = "Honorific Prefix" )
+                                         verbose_name = _("Honorific Prefix" ))
     honorific_suffix = models.CharField( max_length = 1024,
-                                         verbose_name = "Honorific Suffix" )
+                                         verbose_name = _("Honorific Suffix" ))
 
     def __unicode__( self ):
         return '' + self.given_name + ' ' + self.family_name
 
 
 class Tel( models.Model ):
+    """
+    A telephone number of a contact
+    """
+
+    class Meta:
+        verbose_name = _("telephone number")
+        verbose_name_plural = _("telephone numbers")
 
     contact = models.ForeignKey( Contact )
 
+    # making a choice field of type is incorrect as arbitrary
+    # types of phone number are allowed by the vcard specs.
     type  = models.CharField( max_length=30,
-                              verbose_name="type of phone number",
-                              help_text="for instance WORK or HOME" )
-    value = models.CharField( max_length=100 )
+                              verbose_name=_("type of phone number"),
+                              help_text="_(for instance WORK or HOME" ))
+    value = models.CharField( max_length=100, 
+                              verbose_name=_("value") )
 
 
 class Email( models.Model ):
+    """
+    An email of a contact
+    """
+    class Meta:
+        verbose_name = _("email")
+        verbose_name_plural = _("emails")
 
     contact = models.ForeignKey( Contact )
 
     type  = models.CharField( max_length=30,
-                              verbose_name="type of email" )
-    value = models.CharField( max_length=100 )
-
+                              verbose_name=_("type of email"))
+    value = models.EmailField( max_length=100, 
+                              verbose_name=_("value") )
 
 class Geo( models.Model ):
+    """
+    A geographical location associated with the contact
+    in geo uri format
+    """
+    class Meta:
+        verbose_name = _("geographic uri")
+        verbose_name_plural = _("geographic uri")
 
     contact = models.ForeignKey( Contact )
 
+    # because vobject can't properly pass the geo uri for now the
+    # field is specified as a normal CharField
     data      = models.CharField( max_length = 1024,
-                                  verbose_name = "Geographic uri" )
+                                  verbose_name = _("Geographic uri" ))
 
 
 class Org( models.Model ):
+    """
+    An organization and unit the contact is affiliated with.
+    """
+    class Meta:
+        verbose_name = _("organization")
+        verbose_name_plural = _("organizations")
 
     contact = models.ForeignKey( Contact )
 
     organization_name     = models.CharField( max_length = 1024,
-                                      verbose_name = "Organization name" )
+                                      verbose_name = _("Organization name" ))
     organization_unit     = models.CharField( max_length = 1024,
-                                      verbose_name = "Organization unit" )
+                                      verbose_name = _("Organization unit" ))
 
 
 class Adr( models.Model ):
+    """
+    An address
+    """
+    class Meta:
+        verbose_name = _("address")
+        verbose_name_plural = _("addresses")
 
     contact = models.ForeignKey( Contact )
 
     post_office_box      = models.CharField( max_length = 1024,
-                                             verbose_name = "Post Office Box" )
+                                             verbose_name = _("Post Office Box" ))
     extended_address     = models.CharField( max_length = 1024,
-                                             verbose_name = "Extended Address")
+                                             verbose_name = _("Extended Address"))
     street_address       = models.CharField( max_length = 1024,
-                                             verbose_name = "Street Address" )
+                                             verbose_name = _("Street Address" ))
     locality             = models.CharField( max_length = 1024,
-                                             verbose_name = "Locality" )
+                                             verbose_name = _("Locality"))
     region               = models.CharField( max_length = 1024,
-                                             verbose_name = "Region" )
+                                             verbose_name = _("Region"))
     postal_code          = models.CharField( max_length = 1024,
-                                             verbose_name = "Postal Code" )
+                                             verbose_name = _("Postal Code"))
     country_name         = models.CharField( max_length = 1024,
-                                             verbose_name = "Country Name" )
+                                             verbose_name = _("Country Name"))
     type                 = models.CharField( max_length = 1024,
-                                             verbose_name = "Type" )
+                                             verbose_name = _("Type" ))
     value                = models.CharField( max_length = 1024,
-                                             verbose_name = "Value" )
+                                             verbose_name = _("Value"))
 
 
 class Agent( models.Model ):
+    """
+    An agent of the contact
+    """
+    class Meta:
+        verbose_name = _("agent")
+        verbose_name_plural = _("agents")
 
     contact = models.ForeignKey( Contact )
 
@@ -579,10 +663,20 @@ class Label( models.Model ):
 
 
 class Logo( models.Model ):
+    """
+    A logo associated with the contact 
 
+    The data could be stored in binary or as a uri
+    as could be indicated by a type field
+
+    My advice; don't. The vcard specs on communicating
+    files are terrible. I'd even leave the entire field
+    out, and wouldn't bother with it. Otherwise it 
+    would take a lot of time!
+    """
     contact = models.ForeignKey( Contact )
 
-    data = models.CharField( max_length=100 )
+    data = models.TextField()
 
 
 class Mailer( models.Model ):
@@ -603,14 +697,24 @@ class Note( models.Model ):
 
     contact = models.ForeignKey( Contact )
 
-    data = models.CharField( max_length=100 )
+    data = models.TextField()
 
 
 class Photo( models.Model ):
+    """
+    A photo of some aspect of the contact 
 
+    The data could be stored in binary or as a uri
+    as could be indicated by a type field
+
+    My advice; don't. The vcard specs on communicating
+    files are terrible. I'd even leave the entire field
+    out, and wouldn't bother with it. Otherwise it 
+    would take a lot of time!
+    """
     contact = models.ForeignKey( Contact )
 
-    data = models.CharField( max_length=100 )
+    data = models.TextField()
 
 
 class Role( models.Model ):
@@ -621,28 +725,47 @@ class Role( models.Model ):
 
 
 class Sound( models.Model ):
+    """
+    A sound about some aspect of the contact 
 
+    The data could be stored in binary or as a uri
+    as could be indicated by a type field
+
+    My advice; don't. The vcard specs on communicating
+    files are terrible. I'd even leave the entire field
+    out, and wouldn't bother with it. Otherwise it 
+    would take a lot of time!
+    """
     contact = models.ForeignKey( Contact )
 
-    data = models.CharField( max_length=100 )
+    data = models.TextField()
 
 
 class Title( models.Model ):
-
+    """
+    The position or job of the contact
+    """
     contact = models.ForeignKey( Contact )
 
     data = models.CharField( max_length=100 )
 
 
 class Tz( models.Model ):
+    """
+    A time zone of a contact
 
+    Tz is represented as a CharField and not in a formal structure because 
+    the vcard specification allows city names as tz parameters
+    """
     contact = models.ForeignKey( Contact )
 
     data = models.CharField( max_length=100 )
 
 
 class Url( models.Model ):
-
+    """
+    A Url given by a contact.
+    """
     contact = models.ForeignKey( Contact )
 
-    data = models.CharField( max_length=100 )
+    data = models.URLField( verify_exists=False )
