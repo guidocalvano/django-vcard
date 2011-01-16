@@ -24,7 +24,7 @@ class Contact(models.Model):
         the original vCard
     """
     def __unicode__(self):
-        return self.n.__unicode__()
+        return self.fn.__unicode__()
 
 
     class Meta:
