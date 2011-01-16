@@ -120,7 +120,7 @@ class ContactAdmin(admin.ModelAdmin):
     
     # list_display = ( 'selectVCFLink' )
 
-    fields = ['selectVCFLink' ,'n','fn', 'bday', 'classP', 'rev', 'sort_string','uid']
+    fields = ['n','fn', 'bday', 'classP', 'rev', 'sort_string','uid']
     inlines = [TelInline, EmailInline, AdrInline, TitleInline, OrgInline, AgentInline, CategoryInline, KeyInline, LabelInline,LogoInline, NicknameInline, MailerInline, NoteInline, PhotoInline, RoleInline, SoundInline, TzInline, UrlInline, GeoInline]
     
     def get_urls(self):
