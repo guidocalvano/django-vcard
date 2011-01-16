@@ -175,8 +175,14 @@ class Contact(models.Model):
             if( property.name.upper() == "CLASS" ):
                 self.classP = property.value
 
-            if( property.name.upper() == "REV" ):
-                self.rev = property.value
+            try: 
+                if( property.name.upper() == "REV" ):
+                    self.rev = datetime.fromtimestamp( int( re.match( '\\d+', property.value).group( 0 ) ) )
+            except: # do nothing just don't set rev
+
+            # note there is still a distinct possibility the timestamp is misread!
+            # many formats exist for timestamps, that all have different starting times etc. 
+            # supporting rev is in my opinion doomed to fail...
 
             if( property.name.upper() == "SORT-STRING" ):
                 self.sort_string = property.value
@@ -366,7 +372,7 @@ class Contact(models.Model):
 
         if( self.rev ):
             i = v.add( 'rev' )
-            i.value = self.rev
+            i.value = str( int( time.mktime( self.rev.timetuple() ) ) )
 
         if( self.sort_string ):
             i = v.add( 'sort-string' )
