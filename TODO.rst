@@ -10,8 +10,8 @@ Tasks
 3.  org issue -> kijkt mathijs nog naar **done (orgname and org unit were fine right?)**
 4.  geïnternationaliseerde (zie Django docs) verbose_name geeft **done**
 5.  django-extensions graph_models **done**
-6.  admin interface**done**
-7.  inline admin for many (one right?) tomany**done**
+6.  admin interface **done**
+7.  inline admin for many (one right?) tomany **done**
 8.  view in admin voor uploaden vcard **done**
 9.  AGPL
 10. Finish setup **done**
@@ -28,7 +28,7 @@ Tasks
 17. Sensible data types for (at least):
     
     * URL (URLField) **done**
-    * Timezone (int, I believe - see what vobject returns) Can be any value, even 'amsterdam' so just used charfield **done**
+    * Timezone (int, I believe - see what vobject returns) Can be any value, even 'amsterdam' so just used charfield  **done**
     * Photo, Sound, Logo (blob/binary field?) Can be both file and uri with complex specs. Requires both consideration and more time
     * Note (TextField) **done**
     * Address, email and tel type (ChoiceField) You could use a choice field, but specs allow any value 
@@ -36,7 +36,7 @@ Tasks
     * Email (EmailField) **done**
     * Bday (DateField) DateField does not comply to the specs of vcard; "koninginnedag" is a legal value
     * Rev (Integer, maybe? used datefield) **done** BUT could lead to issues; rev is a timestamp but multiple formats exist 
-18. Docstrings for at least all the models, and some of the main functions.**done**
+18. Docstrings for at least all the models, and some of the main functions. **done**
     From the docstring the following things should roughly be clear:
     
     1. What does the function do (semantically, not algorithmically)
