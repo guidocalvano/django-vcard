@@ -8,8 +8,8 @@
 <body>
 <form method="post" enctype="multipart/form-data" action="uploadVCF/">
 {% csrf_token %}
-Select vcf file: <input type="file" name="upfile"/><br/>
-<input type="submit" value="Submit"/><br/>
+{% trans "Select vcf file:" %} <input type="file" name="upfile" value="{% trans "Choose File" %}/><br/>
+<input type="submit" value="{% trans "Submit" %}"/><br/>
 </form>
 </body>
 </html>
