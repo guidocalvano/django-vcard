@@ -155,7 +155,7 @@ class ContactAdmin(admin.ModelAdmin):
 
 #            return HttpResponse( "Error in vcf file" )  
 
-        return HttpResponseRedirect( '/admin/vcard/Contact' )
+        return HttpResponseRedirect( '/admin/vcard/contact' )
 
     def selectVCFLink( self ):
 
