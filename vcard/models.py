@@ -184,6 +184,8 @@ class Contact(models.Model):
                 if( property.name.upper() == "REV" ):
                     self.rev = datetime.fromtimestamp( int( re.match( '\\d+', property.value).group( 0 ) ) )
                 # do nothing just don't set rev
+            except:
+                print "did not set rev... not even worth mentioning, but I have to write something"
                 
             # note there is still a distinct possibility the timestamp is misread!
             # many formats exist for timestamps, that all have different starting times etc. 
