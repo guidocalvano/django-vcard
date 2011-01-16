@@ -139,11 +139,7 @@ class ContactAdmin(admin.ModelAdmin):
 
         for f in request.FILES:
 
-                s = f.read()
-
-                print s
-
-                for o in vobject.readComponents( s ):
+                for o in vobject.readComponents( f ):
 
                     c = Contact()
 
