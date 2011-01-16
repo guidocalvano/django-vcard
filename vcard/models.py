@@ -303,7 +303,7 @@ class Contact(models.Model):
 
                 childModels.append( logo )
 
-        nObject.save()
+        # nObject.save()
 
         # self.n = nObject
         self.save()
