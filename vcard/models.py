@@ -4,6 +4,11 @@ from os import *
 import vobject
 from vobject.vcard import *
 from django.utils.translation import ugettext as _
+import time
+import datetime
+from datetime import *
+from time import *
+
 
 class Contact(models.Model):
     """
@@ -178,8 +183,8 @@ class Contact(models.Model):
             try: 
                 if( property.name.upper() == "REV" ):
                     self.rev = datetime.fromtimestamp( int( re.match( '\\d+', property.value).group( 0 ) ) )
-            except: # do nothing just don't set rev
-
+                # do nothing just don't set rev
+                
             # note there is still a distinct possibility the timestamp is misread!
             # many formats exist for timestamps, that all have different starting times etc. 
             # supporting rev is in my opinion doomed to fail...
