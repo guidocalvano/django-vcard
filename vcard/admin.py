@@ -135,9 +135,9 @@ class ContactAdmin(admin.ModelAdmin):
         
         newContactList = []
 
-        try:
 
-            for f in request.FILES:
+
+        for f in request.FILES:
 
                 s = f.read()
 
@@ -151,13 +151,13 @@ class ContactAdmin(admin.ModelAdmin):
 
                     newContactList.append( c )
 
-        except as error:
+#        except as error:
 
-            for e in newContactList :
+#            for e in newContactList :
 
-                e.delete() # should remove linked values as well...
+#                e.delete() # should remove linked values as well...
 
-            return HttpResponse( "Error in vcf file" )  
+#            return HttpResponse( "Error in vcf file" )  
 
         return HttpResponseRedirect( 'admin/Contact' )
 
