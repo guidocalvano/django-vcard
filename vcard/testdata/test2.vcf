@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Contact;Test2;;;
+FN:Test2 Contact
+item1.ADR;type=HOME;type=pref:;;Kaas 34;Kaas;;KKKK 34;Kaas
+item1.X-ABADR:nl
+item2.ADR;type=WORK:;;FFD 34;Kaas;;3453 KK;Kaas
+item2.X-ABADR:nl
+X-ABUID:7808B5C1-CA5D-4F4F-ACFC-05A27988AC1C\:ABPerson
+END:VCARD
