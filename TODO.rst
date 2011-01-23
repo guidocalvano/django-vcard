@@ -70,3 +70,32 @@ Tasks
 25. Make sure the unittest does an import - export - import for each of the 
     included test vCards.
 26. Birthday INVOERVELD zou in IEDER geval een datumselectie moeten zijn.
+    Vervolgens zou je even moeten kijken hoe je kan zorgen dat dat in het 
+    goede formaat als CharField wordt weggeschreven. (Hint: maak een widget
+     aan.)
+27. There's a value field with addresses, for some reason.
+28. Fields like 'sort string', 'unique identifier' and 'last revision' will
+    rarely ever be set by the user. In some of these cases it makes no sense
+    to display them at all - in other cases they should merely render as read-
+    only fields. Furthermore, the values of some of these fields should be 
+    automatically set to default values from within the admin class.
+29. Considering the structure of the admin interface, it seems to make more
+    sense that the name should be part of the Contact model, rather than
+    having a one-to-one relation with it.
+30. For some fields, eg. 'Class', it is not clear what they mean. In these
+    cases, either add some help_text explaining their meaning or leave the
+    fields out of the Admin form.
+31. For some reason a lot of verbose_name's seem to have capitals on every
+    word. This is not necessary and makes it more difficult to add
+     translations.
+32. For a lot of fields, it makes sense to have a default ordering of fields.
+    Perhaps it is best to either change the order of fields in the model
+     and/or to specify the form field ordering using `fields` in the admin
+     class or a custom ModelForm subclass.
+33. A lot of fields seem to have a 'Data' property - which does not make a lot
+    of sense. Perhaps something like 'Value' would make more sense from the UI
+    side.
+
+As some of the last few points might involve extra work, it makes sense to discuss the possibilities of adding a few hours to the original statement.
+
+    
