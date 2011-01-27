@@ -178,9 +178,9 @@ class Contact(models.Model):
 
             if( property.name.upper() == "BDAY" ):
 
-                year  = int( property.value[0:3] )
-                month = int( property.value[4:5] )
-                day   = int( property.value[6:7] )
+                year  = int( property.value[0:4] )
+                month = int( property.value[4:6] )
+                day   = int( property.value[6:8] )
 
                 self.bday = datetime.date( year, month, day )
 
