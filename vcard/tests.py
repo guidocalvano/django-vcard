@@ -29,12 +29,12 @@ class TestContact(unittest.TestCase):
         whitespaces.
         """
         a = Contact()
-        a.fromVCard( vCard ) 
+        a.importFrom( 'vCard', vCard ) 
         
         b = Contact()
-        b.fromVCard(  a.toVCard() ) 
+        b.importFrom( 'vCard', a.exportTo( 'vCard' ) ) 
          
-        self.assertTrue( a.toVCard() == b.toVCard() )
+        self.assertTrue( a.exportTo( 'vCard' ) == b.exportTo( 'vCard' ) )
     
     def test_vCardsInDirectory( self ) :
         """ 

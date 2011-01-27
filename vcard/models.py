@@ -146,8 +146,8 @@ class Contact(models.Model):
                 for key in property.params.iterkeys():
                     if( key.upper() == "TYPE" ):
                         adr.type = property.params[ key ][ 0 ]
-                    if( key.upper() == "VALUE" ):
-                        adr.value = property.params[ key ][ 0 ]
+                    # if( key.upper() == "VALUE" ):
+                    #    adr.value = property.params[ key ][ 0 ]
 
                 childModels.append( adr )
 
@@ -177,7 +177,12 @@ class Contact(models.Model):
             # these values can simply be assigned to the member value
 
             if( property.name.upper() == "BDAY" ):
-                self.bday = property.value
+
+                year  = int( property.value[0:3] )
+                month = int( property.value[4:5] )
+                day   = int( property.value[6:7] )
+
+                self.bday = datetime.date( year, month, day )
 
             if( property.name.upper() == "CLASS" ):
                 self.classP = property.value
@@ -391,6 +396,18 @@ class Contact(models.Model):
             i = v.add( 'uid' )
             i.value = self.uid
 
+        if( self.bday ):
+
+            i = v.add( 'bday' )
+
+            yearString  = str( self.bday.year )
+            monthString = str( self.bday.month )
+            dayString   = str( self.bday.day )
+
+            if( len( monthString ) == 1 ): monthString = '0' + monthString
+            if( len( dayString   ) == 1 ): dayString = '0' + dayString
+            i.value = yearString + monthString + dayString
+
         for j in self.geo_set.all():
             i = v.add( 'geo' )
             i.value = j.data
@@ -486,8 +503,7 @@ thing associated with the vCard object.") )
     # to the vcard specs 'koninginnendag'
     # is perfectly fine. That is why bday
     # is stored as a CharField
-    bday   = models.CharField(
-       max_length = 256,
+    bday   = models.DateField(
        blank = True,
        null=True,
        verbose_name = _("Birthday" ) )
@@ -639,8 +655,8 @@ class Adr( models.Model ):
                                              verbose_name = _("Country Name"))
     type                 = models.CharField( max_length = 1024,
                                              verbose_name = _("Type" ))
-    value                = models.CharField( max_length = 1024,
-                                             verbose_name = _("Value"))
+    # value                = models.CharField( max_length = 1024,
+    #                                         verbose_name = _("Value"))
 
 
 class Agent( models.Model ):
@@ -698,25 +714,25 @@ class Label( models.Model ):
     data = models.CharField( max_length=2000 )
 
 
-class Logo( models.Model ):
-    """
-    A logo associated with the contact 
+# class Logo( models.Model ):
+#    """
+#    A logo associated with the contact 
 
-    The data could be stored in binary or as a uri
-    as could be indicated by a type field
+#    The data could be stored in binary or as a uri
+#    as could be indicated by a type field
 
-    My advice; don't. The vcard specs on communicating
-    files are terrible. I'd even leave the entire field
-    out, and wouldn't bother with it. Otherwise it 
-    would take a lot of time!
-    """
-    class Meta:
-        verbose_name = _("logo")
-        verbose_name_plural = _("logos")
+#    My advice; don't. The vcard specs on communicating
+#    files are terrible. I'd even leave the entire field
+#    out, and wouldn't bother with it. Otherwise it 
+#    would take a lot of time!
+#    """
+#    class Meta:
+#        verbose_name = _("logo")
+#        verbose_name_plural = _("logos")
 
-    contact = models.ForeignKey( Contact )
+#    contact = models.ForeignKey( Contact )
 
-    data = models.TextField()
+#    data = models.TextField()
 
 
 class Mailer( models.Model ):
@@ -762,26 +778,26 @@ class Note( models.Model ):
     data = models.TextField()
 
 
-class Photo( models.Model ):
-    """
-    A photo of some aspect of the contact 
+# class Photo( models.Model ):
+#    """
+#    A photo of some aspect of the contact 
+#
+#    The data could be stored in binary or as a uri
+#    as could be indicated by a type field
 
-    The data could be stored in binary or as a uri
-    as could be indicated by a type field
-
-    My advice; don't. The vcard specs on communicating
-    files are terrible. I'd even leave the entire field
-    out, and wouldn't bother with it. Otherwise it 
-    would take a lot of time!
-    """
-    class Meta:
-        verbose_name = _("photo")
-        verbose_name_plural = _("photos")
+#    My advice; don't. The vcard specs on communicating
+#    files are terrible. I'd even leave the entire field
+#    out, and wouldn't bother with it. Otherwise it 
+#    would take a lot of time!
+#    """
+#    class Meta:
+#        verbose_name = _("photo")
+#        verbose_name_plural = _("photos")
 
 
-    contact = models.ForeignKey( Contact )
+#    contact = models.ForeignKey( Contact )
 
-    data = models.TextField()
+#    data = models.TextField()
 
 
 class Role( models.Model ):
@@ -799,24 +815,24 @@ class Role( models.Model ):
     data = models.CharField( max_length=100 )
 
 
-class Sound( models.Model ):
-    """
-    A sound about some aspect of the contact 
+# class Sound( models.Model ):
+#    """
+#    A sound about some aspect of the contact 
 
-    The data could be stored in binary or as a uri
-    as could be indicated by a type field
+#    The data could be stored in binary or as a uri
+#    as could be indicated by a type field
 
-    My advice; don't. The vcard specs on communicating
-    files are terrible. I'd even leave the entire field
-    out, and wouldn't bother with it. Otherwise it 
-    would take a lot of time!
-    """
-    class Meta:
-        verbose_name = _("sound")
-        verbose_name_plural = _("sounds")
-    contact = models.ForeignKey( Contact )
+#    My advice; don't. The vcard specs on communicating
+#    files are terrible. I'd even leave the entire field
+#    out, and wouldn't bother with it. Otherwise it 
+#    would take a lot of time!
+#    """
+#    class Meta:
+#        verbose_name = _("sound")
+#        verbose_name_plural = _("sounds")
+#    contact = models.ForeignKey( Contact )
 
-    data = models.TextField()
+#    data = models.TextField()
 
 
 class Title( models.Model ):
