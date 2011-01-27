@@ -8,7 +8,7 @@ import time
 import datetime
 from datetime import *
 from time import *
-
+import re
 
 class Contact(models.Model):
     """
@@ -297,7 +297,9 @@ class Contact(models.Model):
             if( property.name.upper() == "URL" ):
 
                 url = Url()
-                url.data = property.value
+
+                # ':' is replaced with '\:' because ':' must be escaped in vCard files 
+                url.data = re.sub( r'\\:', ':',  property.value )
 
                 childModels.append( url )
 
@@ -466,7 +468,8 @@ class Contact(models.Model):
 
         for j in self.url_set.all():
             i = v.add('url' )
-            i.value = j.data
+            # ':' must be escaped in vCard file data
+            i.value = re.sub( ':',   r'\\:',  j.data )
 
         return v
 
