@@ -432,9 +432,9 @@ class Contact(models.Model):
             i = v.add('label' )
             i.value = j.data
 
-#        for j in self.logo_set.all():
-#            i = v.add('logo' )
-#            i.value = j.data
+        #        for j in self.logo_set.all():
+        #            i = v.add('logo' )
+        #            i.value = j.data
 
         for j in self.mailer_set.all():
             i = v.add('mailer' )
@@ -448,17 +448,17 @@ class Contact(models.Model):
             i = v.add('note' )
             i.value = j.data
 
-#        for j in self.photo_set.all():
-#            i = v.add('photo' )
-#            i.value = j.data
+        #        for j in self.photo_set.all():
+        #            i = v.add('photo' )
+        #            i.value = j.data
 
         for j in self.role_set.all():
             i = v.add('role' )
             i.value = j.data
 
-#        for j in self.sound_set.all():
-#            i = v.add('sound' )
-#            i.value = j.data
+        #        for j in self.sound_set.all():
+        #            i = v.add('sound' )
+        #            i.value = j.data
 
         for j in self.title_set.all():
             i = v.add('title' )
@@ -784,7 +784,6 @@ class Note( models.Model ):
 #
 #    The data could be stored in binary or as a uri
 #    as could be indicated by a type field
-<<<<<<< HEAD
 
 #    My advice; don't. The vcard specs on communicating
 #    files are terrible. I'd even leave the entire field
@@ -795,25 +794,9 @@ class Note( models.Model ):
 #        verbose_name = _("photo")
 #        verbose_name_plural = _("photos")
 
-=======
-
-#    My advice; don't. The vcard specs on communicating
-#    files are terrible. I'd even leave the entire field
-#    out, and wouldn't bother with it. Otherwise it 
-#    would take a lot of time!
-#    """
-#    class Meta:
-#        verbose_name = _("photo")
-#        verbose_name_plural = _("photos")
->>>>>>> 998235eafc9343c04ca2354a8cc8cf0dc7adb944
 
 #    contact = models.ForeignKey( Contact )
 
-<<<<<<< HEAD
-=======
-#    contact = models.ForeignKey( Contact )
-
->>>>>>> 998235eafc9343c04ca2354a8cc8cf0dc7adb944
 #    data = models.TextField()
 
 
