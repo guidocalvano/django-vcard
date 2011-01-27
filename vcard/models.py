@@ -468,8 +468,7 @@ class Contact(models.Model):
 
         for j in self.url_set.all():
             i = v.add('url' )
-            # ':' must be escaped in vCard file data
-            i.value = re.sub( ':',   '\\:',  j.data )
+            i.value = j.data 
 
         return v
 
