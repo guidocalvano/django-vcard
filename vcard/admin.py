@@ -7,11 +7,11 @@ from django.shortcuts import render_to_response
 from django.conf.urls.defaults import *
 from django.utils.translation import ugettext
 
-
+"""
 class NInline(admin.StackedInline):
     model = vcard.models.N
     max_num = 1
-
+"""
 
 class TelInline(admin.StackedInline):
     model = Tel
@@ -120,8 +120,8 @@ class ContactAdmin(admin.ModelAdmin):
     
     # list_display = ( 'selectVCFLink' )
 
-    fields = ['fn', 'bday', 'classP', 'rev', 'sort_string','uid']
-    inlines = [NInline,TelInline, EmailInline, AdrInline, TitleInline, OrgInline, AgentInline, CategoriesInline, KeyInline, LabelInline, NicknameInline, MailerInline, NoteInline, RoleInline, TzInline, UrlInline, GeoInline]
+    fields = ['fn', 'family_name', 'given_name', 'additional_name', 'honorific_prefix', 'honorific_suffix', 'bday', 'classP']
+    inlines = [TelInline, EmailInline, AdrInline, TitleInline, OrgInline, AgentInline, CategoriesInline, KeyInline, LabelInline, NicknameInline, MailerInline, NoteInline, RoleInline, TzInline, UrlInline, GeoInline]
     
     def get_urls(self):
         urls = super(ContactAdmin, self).get_urls()

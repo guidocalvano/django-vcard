@@ -100,17 +100,17 @@ class Contact(models.Model):
 
                 nFound = True
 
-                nObject = N()
+                # nObject = N()
 
-                nObject.contact = self
+                # nObject.contact = self
 
-                nObject.family_name = property.value.family
-                nObject.given_name = property.value.given
-                nObject.additional_name = property.value.additional
-                nObject.honorific_prefix = property.value.prefix
-                nObject.honorific_suffix = property.value.suffix
+                family_name = property.value.family
+                given_name = property.value.given
+                additional_name = property.value.additional
+                honorific_prefix = property.value.prefix
+                honorific_suffix = property.value.suffix
 
-                childModels.append( nObject )
+                # childModels.append( nObject )
 
             # ----------- OPTIONAL MULTIPLE VALUE TABLE PROPERTIES -------
             """
@@ -335,11 +335,11 @@ class Contact(models.Model):
         n = v.add('n')
 
         n.value = vobject.vcard.Name(
-               given = self.n_set.all()[0].given_name,
-               family = self.n_set.all()[0].family_name,
-               additional = self.n_set.all()[0].additional_name,
-               prefix = self.n_set.all()[0].honorific_prefix,
-               suffix = self.n_set.all()[0].honorific_suffix )
+               given = self.given_name,
+               family = self.family_name,
+               additional = self.additional_name,
+               prefix = self.honorific_prefix,
+               suffix = self.honorific_suffix )
 
         fn = v.add('fn')
 
@@ -486,18 +486,30 @@ class Contact(models.Model):
      max_length=1024,
      blank = False,
      null=False,
-     verbose_name = _("Formatted Name"),
+     verbose_name = _("formatted name"),
      help_text = _("The formatted name string associated with the vCard object" ) )
-    """
-    n = models.OneToOneField( 'N',
-        unique = True,
-        blank = False,
-        null = False,
-        verbose_name=_("Name"),
-        help_text=_("A structured representation \
-of the name of the person, place or \
-thing associated with the vCard object.") )
-    """
+
+    family_name      = models.CharField( max_length = 1024,
+                                         verbose_name = _( "family name" ))
+    given_name       = models.CharField( max_length = 1024,
+                                         verbose_name = _("given name" ))
+    additional_name   = models.CharField( max_length = 1024,
+                                          verbose_name = _("additional name" ))
+    honorific_prefix = models.CharField( max_length = 1024,
+                                         verbose_name = _("honorific prefix" ))
+    honorific_suffix = models.CharField( max_length = 1024,
+                                         verbose_name = _("honorific suffix" ))
+
+    # n = models.OneToOneField( 'N',
+    #    unique = True,
+    #    blank = False,
+    #    null = False,
+    #    verbose_name=_("Name"),
+    #    help_text=_("A structured representation \
+    # of the name of the person, place or \
+    # thing associated with the vCard object.") )
+
+
     # bday can be formulated in various ways
     # some ways are dates, but according 
     # to the vcard specs 'koninginnendag'
@@ -506,24 +518,24 @@ thing associated with the vCard object.") )
     bday   = models.DateField(
        blank = True,
        null=True,
-       verbose_name = _("Birthday" ) )
+       verbose_name = _("birthday" ) )
 
     classP        = models.CharField(
        max_length = 256,
        blank = True,
        null=True,
-       verbose_name = _("Class" ) )
+       verbose_name = _("class" ) )
 
     rev           = models.DateTimeField(
        blank = True,
        null=True,
-       verbose_name = _("Last Revision" ) )
+       verbose_name = _("last revision" ) )
 
     sort_string   = models.CharField(
        max_length = 256,
        blank = True,
        null=True,
-       verbose_name = _("Sort String") )
+       verbose_name = _("sort string") )
 
     # a uid is a URI. A URI consists of both
     # a URL and a URN. So using a URLField is 
@@ -533,13 +545,10 @@ thing associated with the vCard object.") )
        max_length = 256,
        blank = True,
        null=True,
-       verbose_name = _("Unique Identifier" ) )
+       verbose_name = _("unique identifier" ) )
 
-
+"""
 class N( models.Model ):
-    """
-    The name of a contact
-    """
     class Meta:
         verbose_name = _("name")
         verbose_name_plural = _("names")
@@ -559,7 +568,7 @@ class N( models.Model ):
 
     def __unicode__( self ):
         return '' + self.given_name + ' ' + self.family_name
-
+"""
 
 class Tel( models.Model ):
     """
@@ -570,13 +579,30 @@ class Tel( models.Model ):
         verbose_name = _("telephone number")
         verbose_name_plural = _("telephone numbers")
 
+    TYPE_CHOICES = (
+        ('VOICE', _(u"INTL")),
+        ('HOME', _(u"home")),
+        ('MSG',  _(u"message")),
+        ('WORK',  _(u"work")),
+        ('pref',  _(u"prefered")),
+        ('fax',  _(u"fax")),
+        ('cell',  _(u"cell phone")),
+        ('video',  _(u"video")),
+        ('pager',  _(u"pager")),
+        ('bbs',  _(u"bbs")),
+        ('modem',  _(u"modem")),
+        ('car',  _(u"car phone")),
+        ('isdn',  _(u"isdn")),
+        ('pcs',  _(u"pcs")),
+    )
+
     contact = models.ForeignKey( Contact )
 
     # making a choice field of type is incorrect as arbitrary
     # types of phone number are allowed by the vcard specs.
     type  = models.CharField( max_length=30,
                               verbose_name=_("type of phone number"),
-                              help_text=_("for instance WORK or HOME" ))
+                              help_text=_("for instance WORK or HOME" ), choices=TYPE_CHOICES)
     value = models.CharField( max_length=100, 
                               verbose_name=_("value") )
 
@@ -589,10 +615,16 @@ class Email( models.Model ):
         verbose_name = _("email")
         verbose_name_plural = _("emails")
 
+    TYPE_CHOICES = (
+        ('INTERNET', _(u"internet")),
+        ('x400', _(u"x400")),
+        ('pref', _(u"pref")),
+    )
+
     contact = models.ForeignKey( Contact )
 
     type  = models.CharField( max_length=30,
-                              verbose_name=_("type of email"))
+                              verbose_name=_("type of email"), choices=TYPE_CHOICES)
     value = models.EmailField( max_length=100, 
                               verbose_name=_("value") )
 
@@ -610,7 +642,7 @@ class Geo( models.Model ):
     # because vobject can't properly pass the geo uri for now the
     # field is specified as a normal CharField
     data      = models.CharField( max_length = 1024,
-                                  verbose_name = _("Geographic uri" ))
+                                  verbose_name = _("geographic uri" ))
 
 
 class Org( models.Model ):
@@ -624,9 +656,9 @@ class Org( models.Model ):
     contact = models.ForeignKey( Contact )
 
     organization_name     = models.CharField( max_length = 1024,
-                                      verbose_name = _("Organization name" ))
+                                      verbose_name = _("organization name" ))
     organization_unit     = models.CharField( max_length = 1024,
-                                      verbose_name = _("Organization unit" ))
+                                      verbose_name = _("organization unit" ))
 
 
 class Adr( models.Model ):
@@ -637,24 +669,34 @@ class Adr( models.Model ):
         verbose_name = _("address")
         verbose_name_plural = _("addresses")
 
+    TYPE_CHOICES = (
+        ('INTL', _(u"INTL")),
+        ('POSTAL', _(u"postal")),
+        ('PARCEL',  _(u"parcel")),
+        ('WORK',  _(u"work")),
+        ('dom',  _(u"dom")),
+        ('home',  _(u"home")),
+        ('pref',  _(u"pref")),
+    )
+
     contact = models.ForeignKey( Contact )
 
     post_office_box      = models.CharField( max_length = 1024,
-                                             verbose_name = _("Post Office Box" ))
+                                             verbose_name = _("post office box" ))
     extended_address     = models.CharField( max_length = 1024,
-                                             verbose_name = _("Extended Address"))
+                                             verbose_name = _("extended address"))
     street_address       = models.CharField( max_length = 1024,
-                                             verbose_name = _("Street Address" ))
+                                             verbose_name = _("street address" ))
     locality             = models.CharField( max_length = 1024,
-                                             verbose_name = _("Locality"))
+                                             verbose_name = _("locality"))
     region               = models.CharField( max_length = 1024,
-                                             verbose_name = _("Region"))
+                                             verbose_name = _("region"))
     postal_code          = models.CharField( max_length = 1024,
-                                             verbose_name = _("Postal Code"))
+                                             verbose_name = _("postal code"))
     country_name         = models.CharField( max_length = 1024,
-                                             verbose_name = _("Country Name"))
+                                             verbose_name = _("country name"))
     type                 = models.CharField( max_length = 1024,
-                                             verbose_name = _("Type" ))
+                                             verbose_name = _("type" ), choices=TYPE_CHOICES))
     # value                = models.CharField( max_length = 1024,
     #                                         verbose_name = _("Value"))
 
