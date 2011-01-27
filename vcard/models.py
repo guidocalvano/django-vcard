@@ -182,7 +182,7 @@ class Contact(models.Model):
                 month = int( property.value[4:6] )
                 day   = int( property.value[6:8] )
 
-                self.bday = datetime.date( year, month, day )
+                # self.bday = datetime.date( year, month, day )
 
             if( property.name.upper() == "CLASS" ):
                 self.classP = property.value
