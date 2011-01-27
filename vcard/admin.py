@@ -58,9 +58,9 @@ class LabelInline(admin.StackedInline):
     extra = 1
 
 
-class LogoInline(admin.StackedInline):
-    model = Logo
-    extra = 1
+# class LogoInline(admin.StackedInline):
+#    model = Logo
+#    extra = 1
 
 
 class MailerInline(admin.StackedInline):
@@ -78,9 +78,9 @@ class NoteInline(admin.StackedInline):
     extra = 1
 
 
-class PhotoInline(admin.StackedInline):
-    model = vcard.models.Photo
-    extra = 1
+# class PhotoInline(admin.StackedInline):
+#    model = vcard.models.Photo
+#    extra = 1
 
 
 class RoleInline(admin.StackedInline):
@@ -88,9 +88,9 @@ class RoleInline(admin.StackedInline):
     extra = 1
 
 
-class SoundInline(admin.StackedInline):
-    model = Sound
-    extra = 1
+# class SoundInline(admin.StackedInline):
+#    model = Sound
+#    extra = 1
 
 
 class TitleInline(admin.StackedInline):
@@ -121,7 +121,7 @@ class ContactAdmin(admin.ModelAdmin):
     # list_display = ( 'selectVCFLink' )
 
     fields = ['fn', 'bday', 'classP', 'rev', 'sort_string','uid']
-    inlines = [NInline,TelInline, EmailInline, AdrInline, TitleInline, OrgInline, AgentInline, CategoriesInline, KeyInline, LabelInline,LogoInline, NicknameInline, MailerInline, NoteInline, PhotoInline, RoleInline, SoundInline, TzInline, UrlInline, GeoInline]
+    inlines = [NInline,TelInline, EmailInline, AdrInline, TitleInline, OrgInline, AgentInline, CategoriesInline, KeyInline, LabelInline, NicknameInline, MailerInline, NoteInline, RoleInline, TzInline, UrlInline, GeoInline]
     
     def get_urls(self):
         urls = super(ContactAdmin, self).get_urls()
@@ -135,25 +135,22 @@ class ContactAdmin(admin.ModelAdmin):
         
         newContactList = []
 
+        try:
+            for o in vobject.readComponents( request.FILES[ 'upfile' ] ):
 
+                c = Contact()
 
-#        for f in request.FILES:
+                c.importFrom( "vObject", o ) 
 
-        for o in vobject.readComponents( request.FILES[ 'upfile' ] ):
+                newContactList.append( c )
 
-                    c = Contact()
+        except:
 
-                    c.importFrom( "vObject", o ) 
+            for i in newContactList :
 
-                    newContactList.append( c )
+                i.delete()
 
-#        except as error:
-
-#            for e in newContactList :
-
-#                e.delete() # should remove linked values as well...
-
-#            return HttpResponse( "Error in vcf file" )  
+            return HttpResponse( "Error in vcf file" )  
 
         return HttpResponseRedirect( '/admin/vcard/contact' )
 
