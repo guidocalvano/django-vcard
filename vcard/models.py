@@ -696,7 +696,7 @@ class Adr( models.Model ):
     country_name         = models.CharField( max_length = 1024,
                                              verbose_name = _("country name"))
     type                 = models.CharField( max_length = 1024,
-                                             verbose_name = _("type" ), choices=TYPE_CHOICES))
+                                             verbose_name = _("type" ), choices=TYPE_CHOICES)
     # value                = models.CharField( max_length = 1024,
     #                                         verbose_name = _("Value"))
 
