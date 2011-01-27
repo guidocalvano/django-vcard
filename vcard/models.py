@@ -468,7 +468,7 @@ class Contact(models.Model):
 
         for j in self.url_set.all():
             i = v.add('url' )
-            i.value = j.data 
+            i.value = re.sub( ':',   r'\\:',  j.data )
 
         return v
 
