@@ -132,7 +132,8 @@ class ContactAdmin(admin.ModelAdmin):
         return my_urls + urls
 
     def uploadVCF( self, request ):
-        
+        """ TODO: Docstring """
+
         newContactList = []
 
         try:
@@ -153,12 +154,15 @@ class ContactAdmin(admin.ModelAdmin):
         return HttpResponseRedirect( '/admin/vcard/contact' )
 
     def selectVCFLink( self ):
+        """ TODO: Docstring """
 
         return '<a href="../newsletter/%s/">%s</a>' % (obj.newsletter.id, obj.newsletter)
     selectVCFLink.short_description = ugettext('Select VCF')
     selectVCFLink.allow_tags = True 
 
     def selectVCF( self, request ):
+        """ TODO: Docstring """
+
         return render_to_response( 'admin/selectVCF.html', context_instance=RequestContext(request) )
         
 
