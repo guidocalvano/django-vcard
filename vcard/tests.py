@@ -16,7 +16,9 @@ PATH_TO_MODELS_PY = os.path.dirname(os.path.realpath(__file__))
 class TestContact(TestCase):
     
     def setUp(self):
-        return
+        path =     os.path.join( PATH_TO_MODELS_PY, 'testdata' )
+        os.chdir(path)
+        self.testfiles =  os.listdir(path)
     
     def privateTestString( self, vCard ) :
         """
@@ -36,25 +38,20 @@ class TestContact(TestCase):
          
         self.assertTrue( a.exportTo( 'vCard' ) == b.exportTo( 'vCard' ) )
     
-    def test_vCardsInDirectory( self ) :
+    def test_importfiles( self ) :
         """ 
         testing is done by taking all files in a given directory, that are assumed to be 
         just vCards and then testing whether the contained string successfully passes
         testString
         
         """
-        path =     os.path.join( PATH_TO_MODELS_PY, 'testdata' )
-        fileList = os.listdir( path )
         
-        correct = True
         
-        for filename in fileList :
-            if( not filename[0] == '.' ) : # if the file is not a hidden system file
-                logging.debug('Importing file %s', filename)
-                fullpath = os.path.join( path, filename )
-                
-                f = open(fullpath)
-                filedata = f.read()
+        for filename in self.testfiles :
+            logging.debug('Importing file %s', filename)
+            
+            f = open(filename)
+            filedata = f.read()
 
-                self.privateTestString( filedata ) 
+            self.privateTestString( filedata ) 
             
