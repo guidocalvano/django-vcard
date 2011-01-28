@@ -138,9 +138,7 @@ class ContactAdmin(admin.ModelAdmin):
         try:
             for o in vobject.readComponents( request.FILES[ 'upfile' ] ):
 
-                c = Contact()
-
-                c.importFrom( "vObject", o ) 
+                c = Contact.importFrom( "vObject", o ) 
 
                 newContactList.append( c )
 

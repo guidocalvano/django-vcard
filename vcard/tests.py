@@ -30,11 +30,9 @@ class TestContact(TestCase):
         where each arbitrary sequence of whitespaces obviously equals any other sequence of
         whitespaces.
         """
-        a = Contact()
-        a.importFrom( 'vCard', vCard ) 
+        a = Contact.importFrom( 'vCard', vCard ) 
         
-        b = Contact()
-        b.importFrom( 'vCard', a.exportTo( 'vCard' ) ) 
+        b = Contact.importFrom( 'vCard', a.exportTo( 'vCard' ) ) 
          
         self.assertTrue( a.exportTo( 'vCard' ) == b.exportTo( 'vCard' ) )
     

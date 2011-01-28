@@ -36,10 +36,10 @@ class Contact(models.Model):
         verbose_name = _("contact")
         verbose_name_plural = _("contacts")
 
-    # functionality
-    def importFrom( self, type, data ):
+    @classmethod
+    def importFrom( cls, type, data ):
         """
-	The contact sets its properties as specified in the argument 'data'
+        The contact sets its properties as specified in the argument 'data'
         according to the specification given in the string passed as 
         argument 'type'
 
@@ -49,18 +49,19 @@ class Contact(models.Model):
         formatted according to the vCard specification
 
         'vObject' is a vobject containing vcard contact information 
+        
+        It returns a Contact object.
+        
         """
-        if( type == "vCard" ):
-            self.fromVCard( data )
-            return
+        if( type == "vCard" ):            
+            return cls.fromVCard( data )
 
         if( type == "vObject" ):
-            self.fromVObject( data )
-            return
+            return cls.fromVObject( data )
 
     def exportTo( self, type ):
         """
-	The contact returns an object with its properties in a format as 
+        The contact returns an object with its properties in a format as 
         defined by the argument type.
 
         'type' can be either 'vCard' or 'vObject'
@@ -75,12 +76,17 @@ class Contact(models.Model):
 
         if( type == "vObject" ):
             return self.toVObject()
-
-    def fromVObject( self, vObject ):
+    
+    @classmethod
+    def fromVObject( cls, vObject ):
         """
         Contact sets its properties as specified by the supplied
-        vObject.
+        vObject. Returns a contact object.
         """
+        
+        # Instantiate a new Contact
+        contact = cls()
+        
         properties = vObject.getChildren()
 
         childModels = []
@@ -94,7 +100,7 @@ class Contact(models.Model):
 
                 fnFound = True
 
-                self.fn = property.value
+                contact.fn = property.value
 
             if( property.name.upper() == "N" ):
 
@@ -102,7 +108,7 @@ class Contact(models.Model):
 
                 # nObject = N()
 
-                # nObject.contact = self
+                # nObject.contact = contact
 
                 family_name = property.value.family
                 given_name = property.value.given
@@ -120,7 +126,7 @@ class Contact(models.Model):
 
                 t = Tel()
 
-                t.contact = self
+                t.contact = contact
 
                 for key in property.params.iterkeys():
                     if( key.upper() == "TYPE" ):
@@ -133,7 +139,7 @@ class Contact(models.Model):
             if( property.name.upper() == "ADR" ):
                 adr = Adr()
 
-                adr.contact = self
+                adr.contact = contact
 
                 adr.post_office_box = property.value.box
                 adr.extended_address = property.value.extended
@@ -154,7 +160,7 @@ class Contact(models.Model):
             if( property.name.upper() == "EMAIL" ):
                 email = Email()  # email (type, value)
 
-                email.contact = self
+                email.contact = contact
 
                 for key in property.params.iterkeys():
                     if( key.upper() == "TYPE" ):
@@ -182,14 +188,14 @@ class Contact(models.Model):
                 month = int( property.value[4:6] )
                 day   = int( property.value[6:8] )
 
-                self.bday = date( year, month, day )
+                contact.bday = date( year, month, day )
 
             if( property.name.upper() == "CLASS" ):
-                self.classP = property.value
+                contact.classP = property.value
 
             try: 
                 if( property.name.upper() == "REV" ):
-                    self.rev = datetime.fromtimestamp( int( re.match( '\\d+', property.value).group( 0 ) ) )
+                    contact.rev = datetime.fromtimestamp( int( re.match( '\\d+', property.value).group( 0 ) ) )
                 # do nothing just don't set rev
             except:
                 print "did not set rev... not even worth mentioning, but I have to write something"
@@ -199,10 +205,10 @@ class Contact(models.Model):
             # supporting rev is in my opinion doomed to fail...
 
             if( property.name.upper() == "SORT-STRING" ):
-                self.sort_string = property.value
+                contact.sort_string = property.value
 
             if( property.name.upper() == "UID" ):
-                self.uid = property.value
+                contact.uid = property.value
 
             # ---------- MULTI VALUE NON TABLE PROPERTIES-----------
 
@@ -312,21 +318,24 @@ class Contact(models.Model):
 
         # nObject.save()
 
-        # self.n = nObject
-        self.save()
+        # contact.n = nObject
+        contact.save()
 
         for m in childModels:
-            m.contact = self
+            m.contact = contact
             m.save()
-
-    def fromVCard( self, vCardString ):
+        
+        return contact
+    
+    @classmethod
+    def fromVCard( cls, vCardString ):
         """
         Contact sets its properties as specified by the supplied
-        string. The string is in vCard format.
+        string. The string is in vCard format. Returns a Contact object.
         """
         vObject = vobject.readOne( vCardString )
 
-        self.fromVObject( vObject )
+        return cls.fromVObject( vObject )
 
     def toVObject( self ):
         """
