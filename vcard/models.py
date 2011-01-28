@@ -494,11 +494,11 @@ class Contact(models.Model):
     # required
 
     fn = models.CharField(
-     max_length=1024,
-     blank = False,
-     null=False,
-     verbose_name = _("formatted name"),
-     help_text = _("The formatted name string associated with the vCard object" ) )
+            max_length=1024,
+            blank = False,
+            null=False,
+            verbose_name = _("formatted name"),
+            help_text = _("The formatted name string associated with the vCard object" ) )
 
     family_name      = models.CharField( max_length = 1024,
                                          verbose_name = _( "family name" ))
