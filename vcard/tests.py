@@ -5,13 +5,15 @@ unittest). These will both pass when you run "manage.py test".
 Replace these with more appropriate tests for your application.
 """
 
+import logging, os
+
 from django.test import TestCase
-from vCard.models import *
+from vcard.models import Contact
 
 PATH_TO_MODELS_PY = os.path.dirname(os.path.realpath(__file__))
 
 
-class TestContact(unittest.TestCase):
+class TestContact(TestCase):
     
     def setUp(self):
         return
@@ -43,16 +45,20 @@ class TestContact(unittest.TestCase):
         testString
         
         """
-        path =     os.path.join( PATH_TO_MODELS_PY,'tests' )
-        fileList = listdir( path )
+        path =     os.path.join( PATH_TO_MODELS_PY, 'testdata' )
+        fileList = os.listdir( path )
         
         correct = True
         
-        for file in fileList :
-            if( not file[0] == '.' ) : # if the file is not a hidden system file
-                str = fdopen( open( os.path.join( path, file ), 0 ) ).read()
+        for filename in fileList :
+            if( not filename[0] == '.' ) : # if the file is not a hidden system file
+                logging.debug('Importing file %s', filename)
+                fullpath = os.path.join( path, filename )
                 
-                self.privateTestString( str ) 
+                f = open(fullpath)
+                filedata = f.read()
+
+                self.privateTestString( filedata ) 
             
 
 if __name__ == '__main__':
