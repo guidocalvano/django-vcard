@@ -1,16 +1,41 @@
+{% extends "admin/base_site.html" %}
 {% load i18n %}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{% block title %}{% trans "Import addresses" %}{{ block.super }}{% endblock %}
 
-<html>
-<head>
-<title>Select VCF</title>
-</head>
-<body>
-<form method="post" enctype="multipart/form-data" action="uploadVCF/">
-{% csrf_token %}
-{% trans "Select vcf file:" %} <input type="file" name="upfile" value="{% trans "Choose File" %}"/><br/>
-<input type="submit" value="{% trans "Submit" %}"/><br/>
-</form>
-</body>
-</html>
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="../../../">
+    {% trans "Home" %}
+  </a>
+   &rsaquo; 
+   <a href="../../">
+     {% trans "VCard" %}
+  </a>
+  &rsaquo; 
+  <a href="../">
+     {% trans "Contacts" %}
+  </a>
+  &rsaquo;
+  {% trans "Import addresses" %}
+</div>
+{% endblock %}
+
+{% block content %}
+<h1>{% trans "Import addresses" %}</h1>
+<div id="content-main">
+  <!--
+  <ul class="object-tools">
+    <li><a href="../">{% trans "Change" %}</a></li>
+    <li><a href="../submit/">{% trans "Create submission" %}</a></li>
+  </ul>
+  -->
+    <form method="post" enctype="multipart/form-data" action="uploadVCF/">
+    {% csrf_token %}
+	{% trans "Select vcf file:" %} <input type="file" name="upfile" value="{% trans "Choose File" %}"/><br/>
+    <input type="submit" name="submit" value="{% trans "Upload" %}"/>
+    </form>
+</div>
+<br/>
+<br/>
+
+{% endblock %}
