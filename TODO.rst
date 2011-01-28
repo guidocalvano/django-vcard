@@ -55,11 +55,11 @@ Tasks
     (or blobs/binary data, what it probably should be). **done** (by removing photo sound and logo)
 22. If a fatal error should be raised during the import process, the imported
     data should automatically be deleted from the database so we won't get 
-    invalid or incomplete data in the database upon repeated failures.**done**
+    invalid or incomplete data in the database upon repeated failures. **done**
 23. URL's get imported wrongfully from Apple's Address Book vCards:     
-    `http://www.test.com` becomes `http\://www.test.com`**done**
+    `http://www.test.com` becomes `http\://www.test.com` **done**
 24. Limit choices for phone, email and address `type` fields to sensible 
-    values (this does not limit the database, though).**done**
+    values (this does not limit the database, though). **done**
     
     From http://microformats.org/wiki/hcard:
     The following lists are informative. See RFC2426 sections 3.2.1 ADR, 3.3.1 TEL, and 3.3.2 EMAIL respectively for normative type values. They are repeated here for convenience. Default type subproperty value(s) is(are) first in each list and indicated in ALL CAPS. types may be multivalued.
@@ -68,11 +68,11 @@ Tasks
     * tel type: VOICE, home, msg, work, pref, fax, cell, video, pager, bbs, modem, car, isdn, pcs **done**
     * email type: INTERNET, x400, pref **done**
 25. Make sure the unittest does an import - export - import for each of the 
-    included test vCards.**done**
+    included test vCards. **done**
 26. Birthday INVOERVELD zou in IEDER geval een datumselectie moeten zijn. **done**
     Vervolgens zou je even moeten kijken hoe je kan zorgen dat dat in het 
-    goede formaat als CharField wordt weggeschreven. (Hint: maak een widget
-     aan.)**done**
+    goede formaat als CharField wordt weggeschreven. **done** (Hint: maak een widget
+     aan.) 
 27. There's a value field with addresses, for some reason. Not anymore **done**
 28. Fields like 'sort string', 'unique identifier' and 'last revision' will
     rarely ever be set by the user. In some of these cases it makes no sense
