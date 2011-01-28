@@ -58,6 +58,3 @@ class TestContact(TestCase):
 
                 self.privateTestString( filedata ) 
             
-
-if __name__ == '__main__':
-    unittest.main()
