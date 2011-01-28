@@ -35,8 +35,14 @@ class TestContact(TestCase):
         a = Contact.importFrom( 'vCard', vCard ) 
         
         b = Contact.importFrom( 'vCard', a.exportTo( 'vCard' ) ) 
-         
-        self.assertTrue( a.exportTo( 'vCard' ) == b.exportTo( 'vCard' ) )
+        
+        self.compare_contacts(a, b)
+    
+    def compare_contacts( self, a, b):
+        """ Compares two Contact objects. """
+        
+        self._assert( a.exportTo( 'vCard' ) == b.exportTo( 'vCard' ) )
+        
     
     def test_importfiles( self ) :
         """ 
@@ -55,3 +61,38 @@ class TestContact(TestCase):
 
             self.privateTestString( filedata ) 
             
+    def test_exportfiles(self):
+        """ 
+        See whether we can import and then export some files. 
+        
+        The procedure is as follows:
+        1. Open a vCard file
+        2. Import the data
+        3. Export the data to a string
+        4. Write it back to a file
+        5. Read it back in
+        6. Compare with the original data read in
+        7. Compare with to original read contents
+        """
+        
+        for filename in self.testfiles :
+            logging.debug('Importing file %s', filename)
+            
+            f = open(filename)
+            filedata = f.read()
+            
+            c1 = Contact.importFrom('vCard', filedata)
+            
+            f2 = os.tmpfile()
+            f2.write(c.exportTo('vCard'))
+            
+            f2.seek(0)
+            
+            filedata2 = f2.read()
+            c2 = Contact.importFrom('vCard', filedata2)
+            
+            self.compare_contacts(a, b)
+            self.assertEqual(filedata1, filedata2)
+      
+            
+        
