@@ -47,47 +47,47 @@ Tasks
     2. What does it return (if it returns anything at all).
     3. What the meaning of eventual parameters are, especially if they're not
        downright evident.
-19. Button in the admin contact view for uploading contacts.
+19. Button in the admin contact view for uploading contacts. **done**
 20. The admin upload functionality should look like it's part of the admin.
     See: https://github.com/dokterbob/django-newsletter/tree/master/newsletter/templates/admin/newsletter/subscription
-21. There is a bug causing a DatabaseError with SQLite due to some string data **done** (by removing photo sound and logo)
+21. There is a bug causing a DatabaseError with SQLite due to some string data
     being saved to the database as 8-bit bytestrings instead of unicode data
-    (or blobs/binary data, what it probably should be).
-22. If a fatal error should be raised during the import process, the imported **done**
-    data should automatically be deleted from the database so we won't get
-    invalid or incomplete data in the database upon repeated failures.
+    (or blobs/binary data, what it probably should be). **done** (by removing photo sound and logo)
+22. If a fatal error should be raised during the import process, the imported
+    data should automatically be deleted from the database so we won't get 
+    invalid or incomplete data in the database upon repeated failures.**done**
 23. URL's get imported wrongfully from Apple's Address Book vCards:     
-    `http://www.test.com` becomes `http\://www.test.com`
+    `http://www.test.com` becomes `http\://www.test.com`**done**
 24. Limit choices for phone, email and address `type` fields to sensible 
-    values (this does not limit the database, though).
+    values (this does not limit the database, though).**done**
     
     From http://microformats.org/wiki/hcard:
     The following lists are informative. See RFC2426 sections 3.2.1 ADR, 3.3.1 TEL, and 3.3.2 EMAIL respectively for normative type values. They are repeated here for convenience. Default type subproperty value(s) is(are) first in each list and indicated in ALL CAPS. types may be multivalued.
 
-    * adr type: INTL, POSTAL, PARCEL, WORK, dom, home, pref
-    * tel type: VOICE, home, msg, work, pref, fax, cell, video, pager, bbs, modem, car, isdn, pcs
-    * email type: INTERNET, x400, pref
-25. Make sure the unittest does an import - export - import for each of the **done**
-    included test vCards.
+    * adr type: INTL, POSTAL, PARCEL, WORK, dom, home, pref **done**
+    * tel type: VOICE, home, msg, work, pref, fax, cell, video, pager, bbs, modem, car, isdn, pcs **done**
+    * email type: INTERNET, x400, pref **done**
+25. Make sure the unittest does an import - export - import for each of the 
+    included test vCards.**done**
 26. Birthday INVOERVELD zou in IEDER geval een datumselectie moeten zijn. **done**
     Vervolgens zou je even moeten kijken hoe je kan zorgen dat dat in het 
     goede formaat als CharField wordt weggeschreven. (Hint: maak een widget
-     aan.)
+     aan.)**done**
 27. There's a value field with addresses, for some reason. Not anymore **done**
 28. Fields like 'sort string', 'unique identifier' and 'last revision' will
     rarely ever be set by the user. In some of these cases it makes no sense
     to display them at all - in other cases they should merely render as read-
     only fields. Furthermore, the values of some of these fields should be 
-    automatically set to default values from within the admin class.
+    automatically set to default values from within the admin class. **done**
 29. Considering the structure of the admin interface, it seems to make more
     sense that the name should be part of the Contact model, rather than
-    having a one-to-one relation with it.
+    having a one-to-one relation with it. **done**
 30. For some fields, eg. 'Class', it is not clear what they mean. In these
     cases, either add some help_text explaining their meaning or leave the
     fields out of the Admin form.
 31. For some reason a lot of verbose_name's seem to have capitals on every
     word. This is not necessary and makes it more difficult to add
-     translations.
+     translations. **done**
 32. For a lot of fields, it makes sense to have a default ordering of fields.
     Perhaps it is best to either change the order of fields in the model
      and/or to specify the form field ordering using `fields` in the admin
