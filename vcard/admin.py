@@ -5,7 +5,7 @@ from vcard.admin_views import *
 import vcard
 from django.shortcuts import render_to_response
 from django.conf.urls.defaults import *
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext as _
 
 """
 class NInline(admin.StackedInline):
@@ -126,13 +126,24 @@ class ContactAdmin(admin.ModelAdmin):
     def get_urls(self):
         urls = super(ContactAdmin, self).get_urls()
         my_urls = patterns('',
-            (r'^selectVCF/uploadVCF/$', self.admin_site.admin_view( self.uploadVCF ) ),
+            (r'^selectVCF/confirmVCF/uploadVCF /$', self.admin_site.admin_view( self.uploadVCF ) ),
+            (r'^selectVCF/confirmVCF/$', self.admin_site.admin_view( self.confirmVCF ) ),
             (r'^selectVCF/$', self.admin_site.admin_view( self.selectVCF ) )
         )
         return my_urls + urls
 
     def uploadVCF( self, request ):
         """ TODO: Docstring """
+
+	newContactList = request.session[ 'unconfirmedContacts' ]
+
+        for i in newContactList :
+
+            i.commit()
+
+        return HttpResponseRedirect( '/admin/vcard/contact' )
+
+    def confirmVCF( self, request ):
 
         newContactList = []
 
@@ -145,19 +156,23 @@ class ContactAdmin(admin.ModelAdmin):
 
         except:
 
-            for i in newContactList :
+            # for i in newContactList :
 
-                i.delete()
+            #    i.delete()
 
-            return HttpResponse( "Error in vcf file" )  
+            return render_to_response( 'admin/errorVCF.html', context_instance=RequestContext(request) )
 
-        return HttpResponseRedirect( '/admin/vcard/contact' )
+	request.session[ 'unconfirmedContacts' ] = newContactList
+
+        return HttpResponseRedirect( '/admin/confirmVCF.html' )
+
+
 
     def selectVCFLink( self ):
         """ TODO: Docstring """
 
         return '<a href="../newsletter/%s/">%s</a>' % (obj.newsletter.id, obj.newsletter)
-    selectVCFLink.short_description = ugettext('Select VCF')
+    selectVCFLink.short_description = _('Select VCF')
     selectVCFLink.allow_tags = True 
 
     def selectVCF( self, request ):

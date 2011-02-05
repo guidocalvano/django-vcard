@@ -9,6 +9,8 @@ import datetime
 from datetime import *
 from time import *
 import re
+from django.utils.translation import ugettext as _
+
 
 class Contact(models.Model):
     """
@@ -89,7 +91,7 @@ class Contact(models.Model):
         
         properties = vObject.getChildren()
 
-        childModels = []
+        contact.childModels = []
 
         fnFound = False
         nFound = False
@@ -116,7 +118,7 @@ class Contact(models.Model):
                 honorific_prefix = property.value.prefix
                 honorific_suffix = property.value.suffix
 
-                # childModels.append( nObject )
+                # contact.childModels.append( nObject )
 
             # ----------- OPTIONAL MULTIPLE VALUE TABLE PROPERTIES -------
             """
@@ -134,7 +136,7 @@ class Contact(models.Model):
 
                 t.value = property.value
 
-                childModels.append( t )
+                contact.childModels.append( t )
 
             if( property.name.upper() == "ADR" ):
                 adr = Adr()
@@ -155,7 +157,7 @@ class Contact(models.Model):
                     # if( key.upper() == "VALUE" ):
                     #    adr.value = property.params[ key ][ 0 ]
 
-                childModels.append( adr )
+                contact.childModels.append( adr )
 
             if( property.name.upper() == "EMAIL" ):
                 email = Email()  # email (type, value)
@@ -168,7 +170,7 @@ class Contact(models.Model):
 
                 email.value = property.value
 
-                childModels.append( email )
+                contact.childModels.append( email )
 
             if( property.name.upper() == "ORG" ):
                 org = Org()  # org (organization_name, organization_unit)
@@ -177,7 +179,7 @@ class Contact(models.Model):
                 if( len( property.value ) > 1 ):
                     org.organization_unit = property.value[ 1 ]
 
-                childModels.append( org )
+                contact.childModels.append( org )
 
             # ---------- OPTIONAL SINGLE VALUE NON TABLE PROPERTIES ---
             # these values can simply be assigned to the member value
@@ -216,89 +218,89 @@ class Contact(models.Model):
 
                 agent = Agent()
                 agent.data = property.value
-                childModels.append( agent )
+                contact.childModels.append( agent )
 
             if( property.name.upper() == "CATEGORIES" ):
 
                 categories = Categories()
                 categories.data = property.value
 
-                childModels.append( categories )
+                contact.childModels.append( categories )
 
             if( property.name.upper() == "GEO" ):
                 geo = Geo()
                 geo.data = property.value
 
-                childModels.append( geo )
+                contact.childModels.append( geo )
 
             if( property.name.upper() == "TZ" ):
                 tz = Tz()
                 tz.data = property.value
 
-                childModels.append( tz )
+                contact.childModels.append( tz )
 
             if( property.name.upper() == "KEY" ):
 
                 key = Key()
                 key.data = property.value
 
-                childModels.append( key )
+                contact.childModels.append( key )
 
             if( property.name.upper() == "LABEL" ):
 
                 label = Label()
                 label.data = property.value
 
-                childModels.append( label )
+                contact.childModels.append( label )
 
             if( property.name.upper() == "MAILER" ):
 
                 mailer = Mailer()
                 mailer.data = property.value
 
-                childModels.append( mailer )
+                contact.childModels.append( mailer )
 
             if( property.name.upper() == "NICKNAME" ):
 
                 nickname = Nickname()
                 nickname.data = property.value
 
-                childModels.append( nickname )
+                contact.childModels.append( nickname )
 
             if( property.name.upper() == "NOTE" ):
 
                 note = Note()
                 note.data = property.value
 
-                childModels.append( note )
+                contact.childModels.append( note )
 
             if( property.name.upper() == "PHOTO" ):
 
                 photo = Photo()
                 photo.data = property.value
 
-                childModels.append( photo )
+                contact.childModels.append( photo )
 
             if( property.name.upper() == "ROLE" ):
 
                 role = Role()
                 role.data = property.value
 
-                childModels.append( role )
+                contact.childModels.append( role )
 
             if( property.name.upper() == "SOUND" ):
 
                 sound = Sound()
                 sound.data = property.value
 
-                childModels.append( sound )
+                contact.childModels.append( sound )
 
             if( property.name.upper() == "TITLE" ):
 
                 title = Title()
                 title.data = property.value
 
-                childModels.append( title )
+                contact.childModels.append( title )
 
             if( property.name.upper() == "URL" ):
 
@@ -307,25 +309,28 @@ class Contact(models.Model):
                 # ':' is replaced with '\:' because ':' must be escaped in vCard files 
                 url.data = re.sub( r'\\:', ':',  property.value )
 
-                childModels.append( url )
+                contact.childModels.append( url )
 
             if( property.name.upper() == "LOGO" ):
 
                 logo = Logo()
                 logo.data = property.value
 
-                childModels.append( logo )
+                contact.childModels.append( logo )
 
         # nObject.save()
 
-        # contact.n = nObject
-        contact.save()
+        # contact.n = nObject        
+        return contact
+
+    def commit( self ):
+
+        self.save()
 
         for m in childModels:
-            m.contact = contact
+            m.contact = self
             m.save()
-        
-        return contact
+  
     
     @classmethod
     def fromVCard( cls, vCardString ):

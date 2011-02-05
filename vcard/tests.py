@@ -34,8 +34,12 @@ class TestContact(TestCase):
         """
         a = Contact.importFrom( 'vCard', vCard ) 
         
+	a.commit()
+
         b = Contact.importFrom( 'vCard', a.exportTo( 'vCard' ) ) 
-        
+
+        b.commit()
+
         self.compare_contacts(a, b)
     
     def compare_contacts( self, a, b):

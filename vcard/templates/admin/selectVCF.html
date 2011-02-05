@@ -29,9 +29,9 @@
     <li><a href="../submit/">{% trans "Create submission" %}</a></li>
   </ul>
   -->
-    <form method="post" enctype="multipart/form-data" action="uploadVCF/">
+    <form method="post" enctype="multipart/form-data" action="confirmVCF/">
     {% csrf_token %}
-	{% trans "Select vcf file:" %} <input type="file" name="upfile" value="{% trans "Choose File" %}"/><br/>
+	<input type="file" name="upfile" value="{% trans "Select VCard File" %}"/><br/>
     <input type="submit" name="submit" value="{% trans "Upload" %}"/>
     </form>
 </div>
