@@ -158,13 +158,15 @@ class ContactAdmin(admin.ModelAdmin):
 
                 newContactList.append( c )
 
-        except:
-
+        except Exception as e:
+            print type(e)
+            print e.args
+            print e
             # for i in newContactList :
 
             #    i.delete()
 
-            return render_to_response( 'admin/errorVCF.html', context_instance=RequestContext(request) )
+            return render_to_response( 'admin/errorVCF.html', {'exception': e }, context_instance=RequestContext(request) )
 
 	request.session[ 'unconfirmedContacts' ] = newContactList
 
