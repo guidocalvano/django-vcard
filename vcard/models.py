@@ -237,10 +237,14 @@ class Contact(models.Model):
 
                     contact.bday = date( year, month, day )
                 except Exception as e:
-                    a = AttributeImportException( "bday" )
-                    a.parentException = e
-                    raise a
+                    try:
+                        year  = int( property.value[0:4] )
+                        month = int( property.value[5:7] )
+                        day   = int( property.value[8:10] )
 
+                        contact.bday = date( year, month, day )
+                    except:
+                        
 
             if( property.name.upper() == "CLASS" ):
                 try:
