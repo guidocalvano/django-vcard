@@ -135,6 +135,10 @@ class ContactAdmin(admin.ModelAdmin):
     def uploadVCF( self, request ):
         """ TODO: Docstring """
 
+        if( !request.REQUEST.has_key[ 'confirm' ] )
+            return HttpResponseRedirect( '/admin/vcard/contact' )
+
+
 	newContactList = request.session[ 'unconfirmedContacts' ]
 
         for i in newContactList :

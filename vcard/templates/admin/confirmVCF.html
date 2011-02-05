@@ -25,11 +25,11 @@
 {% endblock %}
 
 {% block content %}
-<h1>{% trans "Are you sure you want to import" %}{{ contactSet|length }} {% trans "contacts?" %}</h1>
+<h1>{% trans "Are you sure you want to import" %} {{ contactSet|length }} {% trans "contacts?" %}</h1>
 <div id="content-main">
     <ul>
     {% for contact in contactSet %}
-    <li>{{ contact.given_name}} {{ contact.family_name }}</li>
+    <li>{{ contact.fn }} </li>
     {% endfor %}
     </ul>
     <form enctype="multipart/form-data" method="post" action="uploadVCF/">
