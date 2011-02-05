@@ -155,7 +155,7 @@ class ContactAdmin(admin.ModelAdmin):
 
             c = Contact.importFrom( "vObject", o ) 
 
-                newContactList.append( c )
+            newContactList.append( c )
 
         """
         try:
