@@ -244,7 +244,7 @@ class Contact(models.Model):
 
                         contact.bday = date( year, month, day )
                     except:
-                        
+                        pass
 
             if( property.name.upper() == "CLASS" ):
                 try:
