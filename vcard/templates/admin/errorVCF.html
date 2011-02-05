@@ -9,25 +9,24 @@
   </a>
    &rsaquo; 
    <a href="../../../">
-     {% trans "Newsletter" %}
+     {% trans "VCard" %}
   </a>
   &rsaquo; 
   <a href="../../">
-     {% trans "Subscriptions" %}
+     {% trans "Contact" %}
   </a>
   &rsaquo;
   <a href="../">
-    {% trans "Import addresses" %}
+    {% trans "Import VCF" %}
   </a>
   &rsaquo;
-    {% trans "Confirm import" %}
+    {% trans "Error Message" %}
 </div>
 {% endblock %}
 
 {% block content %}
-<h1>{% trans "Are you sure you want to import these contacts?" %}</h1>
+<h1>{% trans "There was an error in your vCard file" %}</h1>
 <div id="content-main">
-	<p> {% trans "There was an error in your vCard File" %} </p><br/>
 	<a href=".."> {% trans "Load a different vCard File" %} </a><br/>
 	<a href="../../"> {% trans "Back to contacts" %} </a>
 

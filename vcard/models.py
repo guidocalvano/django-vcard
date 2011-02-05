@@ -11,6 +11,19 @@ from time import *
 import re
 
 
+class VObjectImportException(Exception):
+    message = _( "The vCard could not be converted into a vObject" )
+
+class AttributeImportException(Exception):
+
+    def __init__(self,attribute):
+
+        self.attribute = attribute
+
+        self.message = "Could not load " + attribute
+
+
+
 class Contact(models.Model):
     """
     import export functionality is done via vobject
@@ -99,9 +112,15 @@ class Contact(models.Model):
             # ----------- REQUIRED PROPERTIES --------------
             if( property.name.upper() == "FN" ):
 
+		try:
+                    contact.fn = property.value
+                except Exception as e:
+                    a = AttributeImportException( "fn" )
+                    a.parentException = e
+                    raise a
+
                 fnFound = True
 
-                contact.fn = property.value
 
             if( property.name.upper() == "N" ):
 
@@ -111,11 +130,16 @@ class Contact(models.Model):
 
                 # nObject.contact = contact
 
-                family_name = property.value.family
-                given_name = property.value.given
-                additional_name = property.value.additional
-                honorific_prefix = property.value.prefix
-                honorific_suffix = property.value.suffix
+                try:
+                    family_name = property.value.family
+                    given_name = property.value.given
+                    additional_name = property.value.additional
+                    honorific_prefix = property.value.prefix
+                    honorific_suffix = property.value.suffix
+                except Exception as e:
+                    a = AttributeImportException( "n" )
+                    a.parentException = e
+                    raise a
 
                 # contact.childModels.append( nObject )
 
@@ -129,9 +153,14 @@ class Contact(models.Model):
 
                 t.contact = contact
 
-                for key in property.params.iterkeys():
-                    if( key.upper() == "TYPE" ):
-                        t.type = property.params[ key ][ 0 ]
+                try:
+                    for key in property.params.iterkeys():
+                        if( key.upper() == "TYPE" ):
+                            t.type = property.params[ key ][ 0 ]
+                except Exception as e:
+                    a = AttributeImportException( "tel" )
+                    a.parentException = e
+                    raise a
 
                 t.value = property.value
 
