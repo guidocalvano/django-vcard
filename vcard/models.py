@@ -171,19 +171,24 @@ class Contact(models.Model):
 
                 adr.contact = contact
 
-                adr.post_office_box = property.value.box
-                adr.extended_address = property.value.extended
-                adr.street_address = property.value.street
-                adr.locality = property.value.city
-                adr.region = property.value.region
-                adr.postal_code = property.value.code
-                adr.country_name = property.value.country
+                try:
+                    adr.post_office_box = property.value.box
+                    adr.extended_address = property.value.extended
+                    adr.street_address = property.value.street
+                    adr.locality = property.value.city
+                    adr.region = property.value.region
+                    adr.postal_code = property.value.code
+                    adr.country_name = property.value.country
 
-                for key in property.params.iterkeys():
-                    if( key.upper() == "TYPE" ):
-                        adr.type = property.params[ key ][ 0 ]
-                    # if( key.upper() == "VALUE" ):
-                    #    adr.value = property.params[ key ][ 0 ]
+                    for key in property.params.iterkeys():
+                        if( key.upper() == "TYPE" ):
+                            adr.type = property.params[ key ][ 0 ]
+                        # if( key.upper() == "VALUE" ):
+                        #    adr.value = property.params[ key ][ 0 ]
+                except Exception as e:
+                    a = AttributeImportException( "adr" )
+                    a.parentException = e
+                    raise a
 
                 contact.childModels.append( adr )
 
@@ -192,20 +197,31 @@ class Contact(models.Model):
 
                 email.contact = contact
 
-                for key in property.params.iterkeys():
-                    if( key.upper() == "TYPE" ):
-                        email.type = property.params[ key ][ 0 ]
+                try:
+                    for key in property.params.iterkeys():
+                        if( key.upper() == "TYPE" ):
+                            email.type = property.params[ key ][ 0 ]
 
-                email.value = property.value
+                    email.value = property.value
+                except Exception as e:
+                    a = AttributeImportException( "email" )
+                    a.parentException = e
+                    raise a
+
 
                 contact.childModels.append( email )
 
             if( property.name.upper() == "ORG" ):
                 org = Org()  # org (organization_name, organization_unit)
 
-                org.organization_name = property.value[ 0 ]
-                if( len( property.value ) > 1 ):
-                    org.organization_unit = property.value[ 1 ]
+                try:
+                    org.organization_name = property.value[ 0 ]
+                    if( len( property.value ) > 1 ):
+                        org.organization_unit = property.value[ 1 ]
+                except Exception as e:
+                    a = AttributeImportException( "org" )
+                    a.parentException = e
+                    raise a
 
                 contact.childModels.append( org )
 
@@ -214,14 +230,25 @@ class Contact(models.Model):
 
             if( property.name.upper() == "BDAY" ):
 
-                year  = int( property.value[0:4] )
-                month = int( property.value[4:6] )
-                day   = int( property.value[6:8] )
+                try:
+                    year  = int( property.value[0:4] )
+                    month = int( property.value[4:6] )
+                    day   = int( property.value[6:8] )
 
-                contact.bday = date( year, month, day )
+                    contact.bday = date( year, month, day )
+                except Exception as e:
+                    a = AttributeImportException( "bday" )
+                    a.parentException = e
+                    raise a
+
 
             if( property.name.upper() == "CLASS" ):
-                contact.classP = property.value
+                try:
+                    contact.classP = property.value
+                except Exception as e:
+                    a = AttributeImportException( "class" )
+                    a.parentException = e
+                    raise a
 
             try: 
                 if( property.name.upper() == "REV" ):
