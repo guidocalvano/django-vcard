@@ -1,0 +1,45 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% block title %}{% trans "Import addresses" %}{{ block.super }}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="../../../../">
+    {% trans "Home" %}
+  </a>
+   &rsaquo; 
+   <a href="../../../">
+     {% trans "Newsletter" %}
+  </a>
+  &rsaquo; 
+  <a href="../../">
+     {% trans "Subscriptions" %}
+  </a>
+  &rsaquo;
+  <a href="../">
+    {% trans "Import addresses" %}
+  </a>
+  &rsaquo;
+    {% trans "Confirm import" %}
+</div>
+{% endblock %}
+
+{% block content %}
+<h1>{% trans "Are you sure you want to import these contacts?" %}</h1>
+<div id="content-main">
+    <ul>
+    {% for contact in contactSet.values %}
+    <li>{{ contact }}</li>
+    {% endfor %}
+    </ul>
+    <form enctype="multipart/form-data" method="post" action="uploadVCF/">
+    {% csrf_token %}
+    <input type="submit" name="confirm" value="{% trans "Confirm" %}"/>
+    <input type="submit" name="cancel" value="{% trans "Cancel" %}"/>
+
+    </form>
+</div>
+<br/>
+<br/>
+
+{% endblock %}
