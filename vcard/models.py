@@ -329,12 +329,12 @@ class Contact(models.Model):
 
                 contact.childModels.append( note )
 
-            if( property.name.upper() == "PHOTO" ):
+            # if( property.name.upper() == "PHOTO" ):
 
-                photo = Photo()
-                photo.data = property.value
+            #    photo = Photo()
+            #    photo.data = property.value
 
-                contact.childModels.append( photo )
+            #    contact.childModels.append( photo )
 
             if( property.name.upper() == "ROLE" ):
 
@@ -343,12 +343,12 @@ class Contact(models.Model):
 
                 contact.childModels.append( role )
 
-            if( property.name.upper() == "SOUND" ):
+            # if( property.name.upper() == "SOUND" ):
 
-                sound = Sound()
-                sound.data = property.value
+            #    sound = Sound()
+            #    sound.data = property.value
 
-                contact.childModels.append( sound )
+            #    contact.childModels.append( sound )
 
             if( property.name.upper() == "TITLE" ):
 
@@ -366,12 +366,12 @@ class Contact(models.Model):
 
                 contact.childModels.append( url )
 
-            if( property.name.upper() == "LOGO" ):
+            # if( property.name.upper() == "LOGO" ):
 
-                logo = Logo()
-                logo.data = property.value
+            #    logo = Logo()
+            #    logo.data = property.value
 
-                contact.childModels.append( logo )
+            #    contact.childModels.append( logo )
 
         # nObject.save()
 
