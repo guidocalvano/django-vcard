@@ -9,7 +9,6 @@ import datetime
 from datetime import *
 from time import *
 import re
-from django.utils.translation import ugettext as _
 
 
 class Contact(models.Model):
@@ -327,7 +326,7 @@ class Contact(models.Model):
 
         self.save()
 
-        for m in childModels:
+        for m in self.childModels:
             m.contact = self
             m.save()
   
