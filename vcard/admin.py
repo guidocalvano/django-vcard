@@ -151,6 +151,13 @@ class ContactAdmin(admin.ModelAdmin):
 
         newContactList = []
 
+        for o in vobject.readComponents( request.FILES[ 'upfile' ] ):
+
+            c = Contact.importFrom( "vObject", o ) 
+
+                newContactList.append( c )
+
+        """
         try:
             for o in vobject.readComponents( request.FILES[ 'upfile' ] ):
 
@@ -167,7 +174,7 @@ class ContactAdmin(admin.ModelAdmin):
             #    i.delete()
 
             return render_to_response( 'admin/errorVCF.html', {'exception': e }, context_instance=RequestContext(request) )
-
+        """
 	request.session[ 'unconfirmedContacts' ] = newContactList
 
         return render_to_response( 'admin/confirmVCF.html', {'contactSet': newContactList }, context_instance=RequestContext(request) )
