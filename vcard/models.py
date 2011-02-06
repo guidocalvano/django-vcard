@@ -43,7 +43,16 @@ class Contact(models.Model):
         the original vCard
     """
     def __unicode__(self):
-        return self.fn
+
+        if( self.fn != "" ):
+            return self.fn
+
+        unicodeName = self.given_name + ' ' + self.family_name 
+
+        if( unicodeName != "" )
+            return unicodeName
+
+        retur "name undefined"
 
 
     class Meta:
@@ -100,6 +109,8 @@ class Contact(models.Model):
 
         # Instantiate a new Contact
         contact = cls()
+
+        contact.errorList = []
 
         contact.errorList.append( "test" ) 
 
