@@ -55,7 +55,7 @@ class Contact(models.Model):
         return "name undefined"
 
     def __init__(self):
-
+        Model.__init__(self)
         self.errorList = []
 
     class Meta:
