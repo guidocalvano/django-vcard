@@ -27,12 +27,12 @@
 {% block content %}
 <h1>{% trans "Are you sure you want to import" %} {{ contactSet|length }} {% trans "contacts?" %}</h1>
 <div id="content-main">
-    {% if errorCount > 1 %}{{errorCount}} {% trans "contacts can ony be imported partially! Some information will be lost (indicated in red below)" %} {% endif %}
-    {% if errorCount == 1 %} {% trans "One contact can ony be imported partially! Some information will be lost (indicated in red below)" %} {% endif %}
+    {% if errorCount > 1 %}{{errorCount}} {% trans "contacts can only be imported partially! Some information will be lost (indicated in red below)" %} {% endif %}
+    {% if errorCount == 1 %} {% trans "One contact can only be imported partially! Some information will be lost (indicated in red below)" %} {% endif %}
 
     <ul>
     {% for contact in contactSet %}
-    <li>{{ contact.fn }} <span style="color: rgb( 255,0,0)"> {% for error in contact.errorList %} {{error}} {% endfor %} </span> </li>
+    <li>{{ contact.fn }} <span style="color: rgb( 255,0,0)"> {% for error in contact.errorList %} {{error}} {% if not forloop.last %} , {% endif %} {% endfor %} </span> </li>
     {% endfor %}
     </ul>
     <form enctype="multipart/form-data" method="post" action="uploadVCF/">
