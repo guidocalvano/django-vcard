@@ -83,9 +83,9 @@ class TestContact(TestCase):
             logging.debug('Importing file %s', filename)
             
             f = open(filename)
-            filedata = f.read()
+            filedata1 = f.read()
             
-            c1 = Contact.importFrom('vCard', filedata)
+            c1 = Contact.importFrom('vCard', filedata1)
             
             c1.commit()
 
