@@ -87,15 +87,19 @@ class TestContact(TestCase):
             
             c1 = Contact.importFrom('vCard', filedata)
             
+            c1.commit()
+
             f2 = os.tmpfile()
-            f2.write(c.exportTo('vCard'))
+            f2.write(c1.exportTo('vCard'))
             
             f2.seek(0)
             
             filedata2 = f2.read()
             c2 = Contact.importFrom('vCard', filedata2)
+
+            c2.commit()
             
-            self.compare_contacts(a, b)
+            self.compare_contacts(c1, c2)
             self.assertEqual(filedata1, filedata2)
       
             

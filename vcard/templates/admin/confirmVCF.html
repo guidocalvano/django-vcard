@@ -32,7 +32,7 @@
 
     <ul>
     {% for contact in contactSet %}
-    <li>{{ contact.fn }} <span style="color: rgb( 255,0,0)"> {% for error in contact.errorList %} {{error}} {% if not forloop.last %} , {% endif %} {% endfor %} </span> </li>
+    <li>{{ contact }} <span style="color: rgb( 255,0,0)"> {% for error in contact.errorList %} {{error}} {% if not forloop.last %} , {% endif %} {% endfor %} </span> </li>
     {% endfor %}
     </ul>
     <form enctype="multipart/form-data" method="post" action="uploadVCF/">

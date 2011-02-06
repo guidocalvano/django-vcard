@@ -54,9 +54,6 @@ class Contact(models.Model):
 
         return "name undefined"
 
-    def __init__(self, *args, **kwargs):
-        models.Model.__init__(self, *args, **kwargs)
-        self.errorList = []
 
     class Meta:
         verbose_name = _("contact")
@@ -112,6 +109,8 @@ class Contact(models.Model):
 
         # Instantiate a new Contact
         contact = cls()
+
+        contact.errorList = [] 
 
         contact.errorList.append( "test" ) 
 
@@ -686,8 +685,6 @@ class Contact(models.Model):
        blank = True,
        null=True,
        verbose_name = _("unique identifier" ) )
-
-    errorList = []
 
 """
 class N( models.Model ):
