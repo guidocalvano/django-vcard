@@ -498,6 +498,9 @@ class Contact(models.Model):
 
             #    contact.childModels.append( logo )
 
+            if( property.name.upper() == "VERSION" ):
+                continue
+
             contact.errorList.append( property.name.upper() )
 
         # nObject.save()
