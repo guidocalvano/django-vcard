@@ -49,7 +49,7 @@ class Contact(models.Model):
 
         unicodeName = self.given_name + ' ' + self.family_name 
 
-        if( unicodeName != "" )
+        if( unicodeName != "" ):
             return unicodeName
 
         retur "name undefined"
