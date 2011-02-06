@@ -105,7 +105,7 @@ class Contact(models.Model):
 
         contact.errorList.append( contact._meta.get_field_by_name('fn')[0].verbose_name )
 
-        contact.errorList.append( Adr._meta.verbose_name.title() )
+        contact.errorList.append( Adr._meta.verbose_name )
 
         properties = vObject.getChildren()
 
@@ -168,7 +168,7 @@ class Contact(models.Model):
 
                     contact.childModels.append( t )
                 except Exception as e:
-                    contact.errorList.append( Tel._meta.verbose_name.title() )
+                    contact.errorList.append( Tel._meta.verbose_name )
 
 
             if( property.name.upper() == "ADR" ):
@@ -194,7 +194,7 @@ class Contact(models.Model):
                     contact.childModels.append( adr )
 
                 except Exception as e:
-                    contact.errorList.append( Adr._meta.verbose_name.title() )
+                    contact.errorList.append( Adr._meta.verbose_name )
 
 
 
@@ -213,7 +213,7 @@ class Contact(models.Model):
                     contact.childModels.append( email )
 
                 except Exception as e:
-                    contact.errorList.append( Email._meta.verbose_name.title() )
+                    contact.errorList.append( Email._meta.verbose_name )
 
 
             if( property.name.upper() == "ORG" ):
@@ -227,7 +227,7 @@ class Contact(models.Model):
                     contact.childModels.append( org )
 
                 except Exception as e:
-                    contact.errorList.append( Org._meta.verbose_name.title() )
+                    contact.errorList.append( Org._meta.verbose_name )
 
 
             # ---------- OPTIONAL SINGLE VALUE NON TABLE PROPERTIES ---
@@ -292,7 +292,7 @@ class Contact(models.Model):
                     agent.data = property.value
                     contact.childModels.append( agent )
                 except:
-                    contact.errorList.append( Agent._meta.verbose_name.title() )
+                    contact.errorList.append( Agent._meta.verbose_name )
 
             if( property.name.upper() == "CATEGORIES" ):
                 try:
@@ -301,7 +301,7 @@ class Contact(models.Model):
 
                     contact.childModels.append( categories )
                 except:
-                    contact.errorList.append( Categories._meta.verbose_name.title() )
+                    contact.errorList.append( Categories._meta.verbose_name )
 
 
             if( property.name.upper() == "GEO" ):
@@ -312,7 +312,7 @@ class Contact(models.Model):
 
                     contact.childModels.append( geo )
                 except:
-                    contact.errorList.append( Geo._meta.verbose_name.title() )
+                    contact.errorList.append( Geo._meta.verbose_name )
 
 
             if( property.name.upper() == "TZ" ):
@@ -323,7 +323,7 @@ class Contact(models.Model):
 
                     contact.childModels.append( tz )
                 except:
-                    contact.errorList.append( Tz._meta.verbose_name.title() )
+                    contact.errorList.append( Tz._meta.verbose_name )
 
 
             if( property.name.upper() == "KEY" ):
@@ -334,7 +334,7 @@ class Contact(models.Model):
 
                     contact.childModels.append( key )
                 except:
-                    contact.errorList.append( Key._meta.verbose_name.title() )
+                    contact.errorList.append( Key._meta.verbose_name )
 
             if( property.name.upper() == "LABEL" ):
                 try:
@@ -344,7 +344,7 @@ class Contact(models.Model):
 
                     contact.childModels.append( label )
                 except:
-                    contact.errorList.append( Label._meta.verbose_name.title() )
+                    contact.errorList.append( Label._meta.verbose_name )
 
             if( property.name.upper() == "MAILER" ):
                 try:
@@ -354,7 +354,7 @@ class Contact(models.Model):
 
                     contact.childModels.append( mailer )
                 except:
-                    contact.errorList.append( Mailer._meta.verbose_name.title() )
+                    contact.errorList.append( Mailer._meta.verbose_name )
 
             if( property.name.upper() == "NICKNAME" ):
                 try:
@@ -364,7 +364,7 @@ class Contact(models.Model):
 
                     contact.childModels.append( nickname )
                 except:
-                    contact.errorList.append( Nickname._meta.verbose_name.title() )
+                    contact.errorList.append( Nickname._meta.verbose_name )
 
             if( property.name.upper() == "NOTE" ):
                 try:
@@ -374,7 +374,7 @@ class Contact(models.Model):
 
                     contact.childModels.append( note )
                 except:
-                    contact.errorList.append( Note._meta.verbose_name.title() )
+                    contact.errorList.append( Note._meta.verbose_name )
 
             # if( property.name.upper() == "PHOTO" ):
 
@@ -391,7 +391,7 @@ class Contact(models.Model):
 
                     contact.childModels.append( role )
                 except:
-                    contact.errorList.append( Role._meta.verbose_name.title() )
+                    contact.errorList.append( Role._meta.verbose_name )
 
             # if( property.name.upper() == "SOUND" ):
 
@@ -408,7 +408,7 @@ class Contact(models.Model):
 
                     contact.childModels.append( title )
                 except:
-                    contact.errorList.append( Title._meta.verbose_name.title() )
+                    contact.errorList.append( Title._meta.verbose_name )
 
 
             if( property.name.upper() == "URL" ):
@@ -421,7 +421,7 @@ class Contact(models.Model):
 
                      contact.childModels.append( url )
                 except:
-                    contact.errorList.append( Url._meta.verbose_name.title() )
+                    contact.errorList.append( Url._meta.verbose_name )
 
             # if( property.name.upper() == "LOGO" ):
 
