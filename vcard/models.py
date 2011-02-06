@@ -52,7 +52,7 @@ class Contact(models.Model):
         if( unicodeName != "" ):
             return unicodeName
 
-        retur "name undefined"
+        return "name undefined"
 
 
     class Meta:
