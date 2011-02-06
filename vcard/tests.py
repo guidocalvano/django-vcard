@@ -45,7 +45,7 @@ class TestContact(TestCase):
     def compare_contacts( self, a, b):
         """ Compares two Contact objects. """
         
-        self._assert( a.exportTo( 'vCard' ) == b.exportTo( 'vCard' ) )
+        self.assertEqual( a.exportTo( 'vCard' ), b.exportTo( 'vCard' ) )
         
     
     def test_importfiles( self ) :
