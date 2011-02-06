@@ -113,8 +113,6 @@ class Contact(models.Model):
         # Instantiate a new Contact
         contact = cls()
 
-        contact.errorList = []
-
         contact.errorList.append( "test" ) 
 
         contact.errorList.append( contact._meta.get_field_by_name('fn')[0].verbose_name )
