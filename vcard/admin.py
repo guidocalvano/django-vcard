@@ -177,7 +177,15 @@ class ContactAdmin(admin.ModelAdmin):
         """
 	request.session[ 'unconfirmedContacts' ] = newContactList
 
-        return render_to_response( 'admin/confirmVCF.html', {'contactSet': newContactList }, context_instance=RequestContext(request) )
+        errorCount = 0
+
+        for i in newContactList :
+
+           if( len( i.errorList ) > 0 ):
+
+               errorCount += 1
+
+        return render_to_response( 'admin/confirmVCF.html', {'contactSet': newContactList, 'errorCount': errorCount }, context_instance=RequestContext(request) )
 
 
 

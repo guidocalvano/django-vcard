@@ -115,9 +115,7 @@ class Contact(models.Model):
 		try:
                     contact.fn = property.value
                 except Exception as e:
-                    a = AttributeImportException( "fn" )
-                    a.parentException = e
-                    raise a
+                    errorList.append( contact._meta.get_field_by_name('fn')[0].verbose_name )
 
                 fnFound = True
 
@@ -136,10 +134,12 @@ class Contact(models.Model):
                     additional_name = property.value.additional
                     honorific_prefix = property.value.prefix
                     honorific_suffix = property.value.suffix
+
+                    nFound = True
+
                 except Exception as e:
-                    a = AttributeImportException( "n" )
-                    a.parentException = e
-                    raise a
+                     errorList.append( Contact._meta.get_field_by_name('n')[0].verbose_name )
+
 
                 # contact.childModels.append( nObject )
 
@@ -157,14 +157,13 @@ class Contact(models.Model):
                     for key in property.params.iterkeys():
                         if( key.upper() == "TYPE" ):
                             t.type = property.params[ key ][ 0 ]
+
+                    t.value = property.value
+
+                    contact.childModels.append( t )
                 except Exception as e:
-                    a = AttributeImportException( "tel" )
-                    a.parentException = e
-                    raise a
+                     errorList.append( Tel._meta.verbose_name.title() )
 
-                t.value = property.value
-
-                contact.childModels.append( t )
 
             if( property.name.upper() == "ADR" ):
                 adr = Adr()
@@ -185,12 +184,13 @@ class Contact(models.Model):
                             adr.type = property.params[ key ][ 0 ]
                         # if( key.upper() == "VALUE" ):
                         #    adr.value = property.params[ key ][ 0 ]
-                except Exception as e:
-                    a = AttributeImportException( "adr" )
-                    a.parentException = e
-                    raise a
 
-                contact.childModels.append( adr )
+                    contact.childModels.append( adr )
+
+                except Exception as e:
+                     errorList.append( Adr._meta.verbose_name.title() )
+
+
 
             if( property.name.upper() == "EMAIL" ):
                 email = Email()  # email (type, value)
@@ -203,13 +203,12 @@ class Contact(models.Model):
                             email.type = property.params[ key ][ 0 ]
 
                     email.value = property.value
+
+                    contact.childModels.append( email )
+
                 except Exception as e:
-                    a = AttributeImportException( "email" )
-                    a.parentException = e
-                    raise a
+                     errorList.append( Email._meta.verbose_name.title() )
 
-
-                contact.childModels.append( email )
 
             if( property.name.upper() == "ORG" ):
                 org = Org()  # org (organization_name, organization_unit)
@@ -218,12 +217,12 @@ class Contact(models.Model):
                     org.organization_name = property.value[ 0 ]
                     if( len( property.value ) > 1 ):
                         org.organization_unit = property.value[ 1 ]
-                except Exception as e:
-                    a = AttributeImportException( "org" )
-                    a.parentException = e
-                    raise a
 
-                contact.childModels.append( org )
+                    contact.childModels.append( org )
+
+                except Exception as e:
+                     errorList.append( Org._meta.verbose_name.title() )
+
 
             # ---------- OPTIONAL SINGLE VALUE NON TABLE PROPERTIES ---
             # these values can simply be assigned to the member value
@@ -244,32 +243,39 @@ class Contact(models.Model):
 
                         contact.bday = date( year, month, day )
                     except:
-                        pass
+                        contact.errorList.append( contact._meta.get_field_by_name('bday')[0].verbose_name )
 
             if( property.name.upper() == "CLASS" ):
                 try:
                     contact.classP = property.value
                 except Exception as e:
-                    a = AttributeImportException( "class" )
-                    a.parentException = e
-                    raise a
+                    contact.errorList.append( Contact._meta.get_field_by_name('classP')[0].verbose_name )
 
-            try: 
-                if( property.name.upper() == "REV" ):
+
+            if( property.name.upper() == "REV" ):
+                try:
                     contact.rev = datetime.fromtimestamp( int( re.match( '\\d+', property.value).group( 0 ) ) )
                 # do nothing just don't set rev
-            except:
-                print "did not set rev... not even worth mentioning, but I have to write something"
+                except:
+                    Contact.errorList.append( Contact._meta.get_field_by_name('rev')[0].verbose_name )
                 
             # note there is still a distinct possibility the timestamp is misread!
             # many formats exist for timestamps, that all have different starting times etc. 
             # supporting rev is in my opinion doomed to fail...
 
             if( property.name.upper() == "SORT-STRING" ):
-                contact.sort_string = property.value
+                try:
+                    contact.sort_string = property.value
+                except:
+                    contact.errorList.append( Contact._meta.get_field_by_name('sort_string')[0].verbose_name )
+
 
             if( property.name.upper() == "UID" ):
-                contact.uid = property.value
+                try:
+                    contact.uid = property.value
+                except:
+                    contact.errorList.append( Contact._meta.get_field_by_name('uid')[0].verbose_name )
+
 
             # ---------- MULTI VALUE NON TABLE PROPERTIES-----------
 
@@ -621,6 +627,8 @@ class Contact(models.Model):
        blank = True,
        null=True,
        verbose_name = _("unique identifier" ) )
+
+    errorList = []
 
 """
 class N( models.Model ):
