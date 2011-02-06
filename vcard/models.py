@@ -97,7 +97,14 @@ class Contact(models.Model):
         Contact sets its properties as specified by the supplied
         vObject. Returns a contact object.
         """
-        
+
+        errorList.append( "test" ) 
+
+        errorList.append( contact._meta.get_field_by_name('fn')[0].verbose_name )
+
+        errorList.append( Adr._meta.verbose_name.title() )
+
+
         # Instantiate a new Contact
         contact = cls()
         
