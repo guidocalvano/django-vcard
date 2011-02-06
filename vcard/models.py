@@ -305,51 +305,76 @@ class Contact(models.Model):
 
 
             if( property.name.upper() == "GEO" ):
-                geo = Geo()
-                geo.data = property.value
+                try:
 
-                contact.childModels.append( geo )
+                    geo = Geo()
+                    geo.data = property.value
+
+                    contact.childModels.append( geo )
+                except:
+                    contact.errorList.append( Geo._meta.verbose_name.title() )
+
 
             if( property.name.upper() == "TZ" ):
-                tz = Tz()
-                tz.data = property.value
+                try:
 
-                contact.childModels.append( tz )
+                    tz = Tz()
+                    tz.data = property.value
+
+                    contact.childModels.append( tz )
+                except:
+                    contact.errorList.append( Tz._meta.verbose_name.title() )
+
 
             if( property.name.upper() == "KEY" ):
+                try:
 
-                key = Key()
-                key.data = property.value
+                    key = Key()
+                    key.data = property.value
 
-                contact.childModels.append( key )
+                    contact.childModels.append( key )
+                except:
+                    contact.errorList.append( Key._meta.verbose_name.title() )
 
             if( property.name.upper() == "LABEL" ):
+                try:
 
-                label = Label()
-                label.data = property.value
+                    label = Label()
+                    label.data = property.value
 
-                contact.childModels.append( label )
+                    contact.childModels.append( label )
+                except:
+                    contact.errorList.append( Label._meta.verbose_name.title() )
 
             if( property.name.upper() == "MAILER" ):
+                try:
 
-                mailer = Mailer()
-                mailer.data = property.value
+                    mailer = Mailer()
+                    mailer.data = property.value
 
-                contact.childModels.append( mailer )
+                    contact.childModels.append( mailer )
+                except:
+                    contact.errorList.append( Mailer._meta.verbose_name.title() )
 
             if( property.name.upper() == "NICKNAME" ):
+                try:
 
-                nickname = Nickname()
-                nickname.data = property.value
+                    nickname = Nickname()
+                    nickname.data = property.value
 
-                contact.childModels.append( nickname )
+                    contact.childModels.append( nickname )
+                except:
+                    contact.errorList.append( Nickname._meta.verbose_name.title() )
 
             if( property.name.upper() == "NOTE" ):
+                try:
 
-                note = Note()
-                note.data = property.value
+                    note = Note()
+                    note.data = property.value
 
-                contact.childModels.append( note )
+                    contact.childModels.append( note )
+                except:
+                    contact.errorList.append( Note._meta.verbose_name.title() )
 
             # if( property.name.upper() == "PHOTO" ):
 
@@ -359,11 +384,14 @@ class Contact(models.Model):
             #    contact.childModels.append( photo )
 
             if( property.name.upper() == "ROLE" ):
+                try:
 
-                role = Role()
-                role.data = property.value
+                    role = Role()
+                    role.data = property.value
 
-                contact.childModels.append( role )
+                    contact.childModels.append( role )
+                except:
+                    contact.errorList.append( Role._meta.verbose_name.title() )
 
             # if( property.name.upper() == "SOUND" ):
 
@@ -373,20 +401,27 @@ class Contact(models.Model):
             #    contact.childModels.append( sound )
 
             if( property.name.upper() == "TITLE" ):
+                try:
 
-                title = Title()
-                title.data = property.value
+                    title = Title()
+                    title.data = property.value
 
-                contact.childModels.append( title )
+                    contact.childModels.append( title )
+                except:
+                    contact.errorList.append( Title._meta.verbose_name.title() )
+
 
             if( property.name.upper() == "URL" ):
+                try:
 
-                url = Url()
+                     url = Url()
 
-                # ':' is replaced with '\:' because ':' must be escaped in vCard files 
-                url.data = re.sub( r'\\:', ':',  property.value )
+                     # ':' is replaced with '\:' because ':' must be escaped in vCard files 
+                     url.data = re.sub( r'\\:', ':',  property.value )
 
-                contact.childModels.append( url )
+                     contact.childModels.append( url )
+                except:
+                    contact.errorList.append( Url._meta.verbose_name.title() )
 
             # if( property.name.upper() == "LOGO" ):
 
