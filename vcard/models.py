@@ -98,16 +98,15 @@ class Contact(models.Model):
         vObject. Returns a contact object.
         """
 
-        errorList.append( "test" ) 
-
-        errorList.append( contact._meta.get_field_by_name('fn')[0].verbose_name )
-
-        errorList.append( Adr._meta.verbose_name.title() )
-
-
         # Instantiate a new Contact
         contact = cls()
-        
+
+        contact.errorList.append( "test" ) 
+
+        contact.errorList.append( contact._meta.get_field_by_name('fn')[0].verbose_name )
+
+        contact.errorList.append( Adr._meta.verbose_name.title() )
+
         properties = vObject.getChildren()
 
         contact.childModels = []
@@ -122,7 +121,7 @@ class Contact(models.Model):
 		try:
                     contact.fn = property.value
                 except Exception as e:
-                    errorList.append( contact._meta.get_field_by_name('fn')[0].verbose_name )
+                    contact.errorList.append( contact._meta.get_field_by_name('fn')[0].verbose_name )
 
                 fnFound = True
 
@@ -145,7 +144,7 @@ class Contact(models.Model):
                     nFound = True
 
                 except Exception as e:
-                     errorList.append( Contact._meta.get_field_by_name('n')[0].verbose_name )
+                     contact.errorList.append( Contact._meta.get_field_by_name('n')[0].verbose_name )
 
 
                 # contact.childModels.append( nObject )
@@ -169,7 +168,7 @@ class Contact(models.Model):
 
                     contact.childModels.append( t )
                 except Exception as e:
-                     errorList.append( Tel._meta.verbose_name.title() )
+                    contact.errorList.append( Tel._meta.verbose_name.title() )
 
 
             if( property.name.upper() == "ADR" ):
@@ -195,7 +194,7 @@ class Contact(models.Model):
                     contact.childModels.append( adr )
 
                 except Exception as e:
-                     errorList.append( Adr._meta.verbose_name.title() )
+                    contact.errorList.append( Adr._meta.verbose_name.title() )
 
 
 
@@ -214,7 +213,7 @@ class Contact(models.Model):
                     contact.childModels.append( email )
 
                 except Exception as e:
-                     errorList.append( Email._meta.verbose_name.title() )
+                    contact.errorList.append( Email._meta.verbose_name.title() )
 
 
             if( property.name.upper() == "ORG" ):
@@ -228,7 +227,7 @@ class Contact(models.Model):
                     contact.childModels.append( org )
 
                 except Exception as e:
-                     errorList.append( Org._meta.verbose_name.title() )
+                    contact.errorList.append( Org._meta.verbose_name.title() )
 
 
             # ---------- OPTIONAL SINGLE VALUE NON TABLE PROPERTIES ---
@@ -288,16 +287,22 @@ class Contact(models.Model):
 
             if( property.name.upper() == "AGENT" ):
 
-                agent = Agent()
-                agent.data = property.value
-                contact.childModels.append( agent )
+                try:
+                    agent = Agent()
+                    agent.data = property.value
+                    contact.childModels.append( agent )
+                except:
+                    contact.errorList.append( Agent._meta.verbose_name.title() )
 
             if( property.name.upper() == "CATEGORIES" ):
+                try:
+                    categories = Categories()
+                    categories.data = property.value
 
-                categories = Categories()
-                categories.data = property.value
+                    contact.childModels.append( categories )
+                except:
+                    contact.errorList.append( Categories._meta.verbose_name.title() )
 
-                contact.childModels.append( categories )
 
             if( property.name.upper() == "GEO" ):
                 geo = Geo()
