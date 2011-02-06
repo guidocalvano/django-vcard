@@ -112,12 +112,6 @@ class Contact(models.Model):
 
         contact.errorList = [] 
 
-        contact.errorList.append( "test" ) 
-
-        contact.errorList.append( contact._meta.get_field_by_name('fn')[0].verbose_name )
-
-        contact.errorList.append( Adr._meta.verbose_name )
-
         properties = vObject.getChildren()
 
         contact.childModels = []
@@ -131,11 +125,11 @@ class Contact(models.Model):
 
 		try:
                     contact.fn = property.value
+                    fnFound = True
+
+                    continue
                 except Exception as e:
                     contact.errorList.append( contact._meta.get_field_by_name('fn')[0].verbose_name )
-
-                fnFound = True
-
 
             if( property.name.upper() == "N" ):
 
@@ -153,6 +147,8 @@ class Contact(models.Model):
                     honorific_suffix = property.value.suffix
 
                     nFound = True
+
+                    continue
 
                 except Exception as e:
                      contact.errorList.append( Contact._meta.get_field_by_name('n')[0].verbose_name )
@@ -178,6 +174,9 @@ class Contact(models.Model):
                     t.value = property.value
 
                     contact.childModels.append( t )
+
+                    continue
+
                 except Exception as e:
                     contact.errorList.append( Tel._meta.verbose_name )
 
@@ -204,6 +203,8 @@ class Contact(models.Model):
 
                     contact.childModels.append( adr )
 
+                    continue
+
                 except Exception as e:
                     contact.errorList.append( Adr._meta.verbose_name )
 
@@ -223,6 +224,8 @@ class Contact(models.Model):
 
                     contact.childModels.append( email )
 
+                    continue
+
                 except Exception as e:
                     contact.errorList.append( Email._meta.verbose_name )
 
@@ -236,6 +239,8 @@ class Contact(models.Model):
                         org.organization_unit = property.value[ 1 ]
 
                     contact.childModels.append( org )
+
+                    continue
 
                 except Exception as e:
                     contact.errorList.append( Org._meta.verbose_name )
@@ -252,6 +257,9 @@ class Contact(models.Model):
                     day   = int( property.value[6:8] )
 
                     contact.bday = date( year, month, day )
+
+                    continue
+
                 except Exception as e:
                     try:
                         year  = int( property.value[0:4] )
@@ -259,12 +267,18 @@ class Contact(models.Model):
                         day   = int( property.value[8:10] )
 
                         contact.bday = date( year, month, day )
+
+                        continue
+
                     except:
                         contact.errorList.append( contact._meta.get_field_by_name('bday')[0].verbose_name )
 
             if( property.name.upper() == "CLASS" ):
                 try:
                     contact.classP = property.value
+
+                    continue
+
                 except Exception as e:
                     contact.errorList.append( Contact._meta.get_field_by_name('classP')[0].verbose_name )
 
@@ -272,7 +286,9 @@ class Contact(models.Model):
             if( property.name.upper() == "REV" ):
                 try:
                     contact.rev = datetime.fromtimestamp( int( re.match( '\\d+', property.value).group( 0 ) ) )
-                # do nothing just don't set rev
+
+                    continue
+
                 except:
                     Contact.errorList.append( Contact._meta.get_field_by_name('rev')[0].verbose_name )
                 
@@ -283,6 +299,9 @@ class Contact(models.Model):
             if( property.name.upper() == "SORT-STRING" ):
                 try:
                     contact.sort_string = property.value
+
+                    continue
+
                 except:
                     contact.errorList.append( Contact._meta.get_field_by_name('sort_string')[0].verbose_name )
 
@@ -290,6 +309,8 @@ class Contact(models.Model):
             if( property.name.upper() == "UID" ):
                 try:
                     contact.uid = property.value
+
+                    continue
                 except:
                     contact.errorList.append( Contact._meta.get_field_by_name('uid')[0].verbose_name )
 
@@ -302,6 +323,9 @@ class Contact(models.Model):
                     agent = Agent()
                     agent.data = property.value
                     contact.childModels.append( agent )
+
+                    continue
+
                 except:
                     contact.errorList.append( Agent._meta.verbose_name )
 
@@ -311,6 +335,9 @@ class Contact(models.Model):
                     categories.data = property.value
 
                     contact.childModels.append( categories )
+
+                    continue
+
                 except:
                     contact.errorList.append( Categories._meta.verbose_name )
 
@@ -322,6 +349,9 @@ class Contact(models.Model):
                     geo.data = property.value
 
                     contact.childModels.append( geo )
+
+                    continue
+
                 except:
                     contact.errorList.append( Geo._meta.verbose_name )
 
@@ -333,6 +363,9 @@ class Contact(models.Model):
                     tz.data = property.value
 
                     contact.childModels.append( tz )
+
+                    continue
+
                 except:
                     contact.errorList.append( Tz._meta.verbose_name )
 
@@ -344,6 +377,9 @@ class Contact(models.Model):
                     key.data = property.value
 
                     contact.childModels.append( key )
+
+                    continue
+
                 except:
                     contact.errorList.append( Key._meta.verbose_name )
 
@@ -354,6 +390,9 @@ class Contact(models.Model):
                     label.data = property.value
 
                     contact.childModels.append( label )
+
+                    continue
+
                 except:
                     contact.errorList.append( Label._meta.verbose_name )
 
@@ -364,6 +403,9 @@ class Contact(models.Model):
                     mailer.data = property.value
 
                     contact.childModels.append( mailer )
+
+                    continue
+
                 except:
                     contact.errorList.append( Mailer._meta.verbose_name )
 
@@ -374,6 +416,9 @@ class Contact(models.Model):
                     nickname.data = property.value
 
                     contact.childModels.append( nickname )
+
+                    continue
+
                 except:
                     contact.errorList.append( Nickname._meta.verbose_name )
 
@@ -384,6 +429,9 @@ class Contact(models.Model):
                     note.data = property.value
 
                     contact.childModels.append( note )
+
+                    continue
+
                 except:
                     contact.errorList.append( Note._meta.verbose_name )
 
@@ -401,6 +449,9 @@ class Contact(models.Model):
                     role.data = property.value
 
                     contact.childModels.append( role )
+
+                    continue
+
                 except:
                     contact.errorList.append( Role._meta.verbose_name )
 
@@ -418,6 +469,9 @@ class Contact(models.Model):
                     title.data = property.value
 
                     contact.childModels.append( title )
+
+                    continue
+
                 except:
                     contact.errorList.append( Title._meta.verbose_name )
 
@@ -425,12 +479,15 @@ class Contact(models.Model):
             if( property.name.upper() == "URL" ):
                 try:
 
-                     url = Url()
+                    url = Url()
 
-                     # ':' is replaced with '\:' because ':' must be escaped in vCard files 
-                     url.data = re.sub( r'\\:', ':',  property.value )
+                    # ':' is replaced with '\:' because ':' must be escaped in vCard files 
+                    url.data = re.sub( r'\\:', ':',  property.value )
 
-                     contact.childModels.append( url )
+                    contact.childModels.append( url )
+
+                    continue
+
                 except:
                     contact.errorList.append( Url._meta.verbose_name )
 
@@ -440,6 +497,8 @@ class Contact(models.Model):
             #    logo.data = property.value
 
             #    contact.childModels.append( logo )
+
+            contact.errorList.append( property.name.upper()
 
         # nObject.save()
 
