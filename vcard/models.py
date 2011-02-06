@@ -498,7 +498,7 @@ class Contact(models.Model):
 
             #    contact.childModels.append( logo )
 
-            contact.errorList.append( property.name.upper()
+            contact.errorList.append( property.name.upper() )
 
         # nObject.save()
 
