@@ -49,11 +49,14 @@ class Contact(models.Model):
 
         unicodeName = self.given_name + ' ' + self.family_name 
 
-        if( unicodeName != "" ):
+        if( unicodeName != " " ):
             return unicodeName
 
         return "name undefined"
 
+    def __init__(self):
+
+        self.errorList = []
 
     class Meta:
         verbose_name = _("contact")
