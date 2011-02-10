@@ -23,7 +23,7 @@ setup(
     author_email = 'guidocalvano@yahoo.nl',
     url = 'http://github.com/guidocalvano/django-vcard',
     packages = find_packages(),
-    data_files = [ ('vcard/testdata', 'vcard/testdata/*.vcf') ],
+    data_files = [ ('testdata', 'testdata/*.vcf') ],
     include_package_data = True,
     classifiers = ['Development Status :: 4 - Beta',
                    'Environment :: Web Environment',
