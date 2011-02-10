@@ -2,7 +2,7 @@ BEGIN:VCARD
 VERSION:3.0
 N:Contact;Test4;;;
 FN:Test4 Contact
-ORG:Test Company;
+ORG:ABC, Inc.;North American Division
 EMAIL;type=INTERNET;type=HOME;type=pref:test1@test.com
 EMAIL;type=INTERNET;type=WORK:test2@test.com
 TEL;type=CELL;type=pref:+3123423432

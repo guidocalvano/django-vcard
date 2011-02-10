@@ -151,13 +151,9 @@ class ContactAdmin(admin.ModelAdmin):
 
         newContactList = []
 
-        for o in vobject.readComponents( request.FILES[ 'upfile' ] ):
+        if( request.FILES.has_key( 'upfile' ) ):
+            return HttpResponseRedirect( '/admin/vcard/contact/selectVCF/' )
 
-            c = Contact.importFrom( "vObject", o ) 
-
-            newContactList.append( c )
-
-        """
         try:
             for o in vobject.readComponents( request.FILES[ 'upfile' ] ):
 
@@ -169,12 +165,13 @@ class ContactAdmin(admin.ModelAdmin):
             print type(e)
             print e.args
             print e
-            # for i in newContactList :
 
-            #    i.delete()
+            for i in newContactList :
+
+                i.delete()
 
             return render_to_response( 'admin/errorVCF.html', {'exception': e }, context_instance=RequestContext(request) )
-        """
+
 	request.session[ 'unconfirmedContacts' ] = newContactList
 
         errorCount = 0
