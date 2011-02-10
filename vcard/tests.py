@@ -17,6 +17,9 @@ class TestContact(TestCase):
     
     def setUp(self):
         self.path =     os.path.join( PATH_TO_MODELS_PY, 'testdata' )
+
+        print "THE PATH:" + self.path
+
         os.chdir(self.path)
         self.testfiles =  os.listdir(self.path)
     
@@ -55,7 +58,6 @@ class TestContact(TestCase):
         testString
         
         """
-        print "THE PATH:" + self.path
         
         for filename in self.testfiles :
             logging.debug('Importing file %s', filename)
