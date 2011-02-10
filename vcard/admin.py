@@ -151,7 +151,7 @@ class ContactAdmin(admin.ModelAdmin):
 
         newContactList = []
 
-        if( request.FILES.has_key( 'upfile' ) ):
+        if( not request.FILES.has_key( 'upfile' ) ):
             return HttpResponseRedirect( '/admin/vcard/contact/selectVCF/' )
 
         try:
