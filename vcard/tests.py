@@ -68,30 +68,30 @@ class TestContact(TestCase):
     def test_all_properties_imported_and_exported( self ):
 
         testVcard = "BEGIN:VCARD\n\
-        VERSION:3.0\n\
-        FN:Forrest Gump\n\
-        N:family_name;given_name;additional_name;honorific_prefix;honorific_suffix\n\
-        ADR;TYPE=WORK:post_office_box;extended_address;street_address;locality;region;postal_code;country\n\
-        AGENT:agent\n\
-        BDAY;value=date:2001-01-04\n\
-        CATEGORY:category\n\
-        CLASS:class\n\
-        EMAIL;TYPE=PREF:forrestgump@example.com\n\
-        GEO:geo\n\
-        KEY:key\n\
-        LABEL:label\n\
-        NICKNAME:nickname\n\
-        NOTE:note\n\
-        ORG:ABC, Inc.;North American Division\n\
-        REV:20080424T195243Z\n\
-        ROLE:role\n\
-        SORT-STRING:sort_string\n\
-        TEL;TYPE=WORK:(111) 555-1212\n\
-        TITLE:Shrimp Man\n\
-        TZ:tz\n\
-        UID:uid\n\
-        URL:http://www.google.com\n\
-        END:VCARD\n"
+VERSION:3.0\n\
+FN:Forrest Gump\n\
+N:family_name;given_name;additional_name;honorific_prefix;honorific_suffix\n\
+ADR;TYPE=WORK:post_office_box;extended_address;street_address;locality;region;postal_code;country\n\
+AGENT:agent\n\
+BDAY;value=date:2001-01-04\n\
+CATEGORY:category\n\
+CLASS:class\n\
+EMAIL;TYPE=PREF:forrestgump@example.com\n\
+GEO:geo\n\
+KEY:key\n\
+LABEL:label\n\
+NICKNAME:nickname\n\
+NOTE:note\n\
+ORG:ABC, Inc.;North American Division\n\
+REV:20080424T195243Z\n\
+ROLE:role\n\
+SORT-STRING:sort_string\n\
+TEL;TYPE=WORK:(111) 555-1212\n\
+TITLE:Shrimp Man\n\
+TZ:tz\n\
+UID:uid\n\
+URL:http://www.google.com\n\
+END:VCARD\n"
 
         all = Contact.importFrom( 'vCard', testVcard )
 
