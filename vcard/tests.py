@@ -120,6 +120,7 @@ class TestContact(TestCase):
         self.assertEqual( all.email_set.all()[0].type,  "PREF" )
         self.assertEqual( all.email_set.all()[0].value,  "forrestgump@example.com" )
 
+        self.assertEqual( 'asdf', 'sdfg' )
             
     def off_test_exportfiles(self):
         """ 
