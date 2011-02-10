@@ -1,0 +1,20 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Contact;Test4;;;
+FN:Test4 Contact
+ORG:Test Company;
+EMAIL;type=INTERNET;type=HOME;type=pref:test1@test.com
+EMAIL;type=INTERNET;type=WORK:test2@test.com
+TEL;type=CELL;type=pref:+3123423432
+TEL;type=WORK:+323232534343
+item1.ADR;type=HOME;type=pref:;;Kaas 34;Kaas;;KKKK 34;Kaas
+item1.X-ABADR:nl
+item2.ADR;type=WORK:;;FFD 34;Kaas;;3453 KK;Kaas
+item2.X-ABADR:nl
+item3.URL;type=pref:http\://www.test.com
+item3.X-ABLabel:_$!<HomePage>!$_
+BDAY;value=date:2001-01-04
+item4.X-ABDATE;type=pref:2010-03-03
+item4.X-ABLabel:_$!<Anniversary>!$_
+X-ABUID:CEE4741E-AF62-4A42-87BC-646CA7189DF1\:ABPerson
+END:VCARD
