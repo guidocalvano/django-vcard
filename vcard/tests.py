@@ -16,9 +16,9 @@ PATH_TO_MODELS_PY = os.path.dirname(os.path.realpath(__file__))
 class TestContact(TestCase):
     
     def setUp(self):
-        path =     os.path.join( PATH_TO_MODELS_PY, 'testdata' )
-        os.chdir(path)
-        self.testfiles =  os.listdir(path)
+        self.path =     os.path.join( PATH_TO_MODELS_PY, 'testdata' )
+        os.chdir(self.path)
+        self.testfiles =  os.listdir(self.path)
     
     def privateTestString( self, vCard ) :
         """
@@ -55,7 +55,7 @@ class TestContact(TestCase):
         testString
         
         """
-        
+        print "THE PATH:" + self.path
         
         for filename in self.testfiles :
             logging.debug('Importing file %s', filename)
