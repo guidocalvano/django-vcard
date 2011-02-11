@@ -151,7 +151,7 @@ class Contact(models.Model):
                     continue
 
                 except Exception as e:
-                     contact.errorList.append( Contact._meta.get_field_by_name('n')[0].verbose_name )
+                     contact.errorList.append( _("name") )
 
 
                 # contact.childModels.append( nObject )
