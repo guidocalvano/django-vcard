@@ -330,7 +330,7 @@ class Contact(models.Model):
             if( property.name.upper() == "CATEGORIES" ):
                 try:
 
-                    for catVal in property.value
+                    for catVal in property.value:
 
                         category = Category()
 
