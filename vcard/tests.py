@@ -123,7 +123,7 @@ END:VCARD\n"
 
         self.assertEqual( all.bday, date( 2001, 1, 4 ) )
 
-        # self.assertEqual( all.categories_set.all()[ 0 ].data, "category" )
+        # self.assertEqual( all.category_set.all()[ 0 ].data, "category" )
         self.assertEqual( all.classP, "class" )
 
         self.assertEqual( all.email_set.all()[0].type,  "PREF" )

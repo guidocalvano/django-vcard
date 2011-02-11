@@ -43,8 +43,8 @@ class AgentInline(admin.StackedInline):
     extra = 1
 
 
-class CategoriesInline(admin.StackedInline):
-    model = Categories
+class CategoryInline(admin.StackedInline):
+    model = Category
     extra = 1
 
 
@@ -121,7 +121,7 @@ class ContactAdmin(admin.ModelAdmin):
     # list_display = ( 'selectVCFLink' )
 
     fields = ['fn', 'family_name', 'given_name', 'additional_name', 'honorific_prefix', 'honorific_suffix', 'bday', 'classP']
-    inlines = [TelInline, EmailInline, AdrInline, TitleInline, OrgInline, AgentInline, CategoriesInline, KeyInline, LabelInline, NicknameInline, MailerInline, NoteInline, RoleInline, TzInline, UrlInline, GeoInline]
+    inlines = [TelInline, EmailInline, AdrInline, TitleInline, OrgInline, AgentInline, CategoryInline, KeyInline, LabelInline, NicknameInline, MailerInline, NoteInline, RoleInline, TzInline, UrlInline, GeoInline]
     
     def get_urls(self):
         urls = super(ContactAdmin, self).get_urls()

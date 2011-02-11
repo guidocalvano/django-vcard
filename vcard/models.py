@@ -329,13 +329,17 @@ class Contact(models.Model):
 
             if( property.name.upper() == "CATEGORIES" ):
                 try:
-                    categories = Categories()
-                    categories.data = property.value
 
-                    contact.childModels.append( categories )
+                    for catVal in property.value
+
+                        category = Category()
+
+                        category.data = catVal
+
+                        contact.childModels.append( category )
 
                 except:
-                    contact.errorList.append( Categories._meta.verbose_name )
+                    contact.errorList.append( Category._meta.verbose_name )
 
                 continue
 
@@ -616,9 +620,12 @@ class Contact(models.Model):
             i = v.add('agent' )
             i.value = j.data
 
-        for j in self.categories_set.all():
+        if( len( self.category_set.all() ) > 0 ):
             i = v.add('categories' )
-            i.value = j.data
+            i.value = []
+
+            for j in self.category_set.all():
+                i.value.append( j.data )
 
         for j in self.key_set.all():
             i = v.add('key' )
@@ -910,7 +917,7 @@ class Agent( models.Model ):
     data = models.CharField( max_length=100 )
 
 
-class Categories( models.Model ):
+class Category( models.Model ):
     """
     Specifies application category information about the
     contact.  Also known as "tags".    
