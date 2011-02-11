@@ -151,7 +151,6 @@ END:VCARD\n"
         self.assertEqual( all.uid, "uid" )
         self.assertEqual( all.url_set.all()[0].data, "http://www.google.com" )
 
-        self.assertEqual( 'asdf', 'sdfg' )
 
     def off_test_exportfiles(self):
         """ 
