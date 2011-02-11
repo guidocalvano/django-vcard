@@ -127,9 +127,11 @@ class Contact(models.Model):
                     contact.fn = property.value
                     fnFound = True
 
-                    continue
+
                 except Exception as e:
                     contact.errorList.append( contact._meta.get_field_by_name('fn')[0].verbose_name )
+
+                continue
 
             if( property.name.upper() == "N" ):
 
@@ -138,18 +140,18 @@ class Contact(models.Model):
                 # nObject.contact = contact
 
                 try:
-                    self.family_name = property.value.family
-                    self.given_name = property.value.given
-                    self.additional_name = property.value.additional
-                    self.honorific_prefix = property.value.prefix
-                    self.honorific_suffix = property.value.suffix
+                    contact.family_name = property.value.family
+                    contact.given_name = property.value.given
+                    contact.additional_name = property.value.additional
+                    contact.honorific_prefix = property.value.prefix
+                    contact.honorific_suffix = property.value.suffix
 
                     nFound = True
 
-                    continue
-
                 except Exception as e:
                      contact.errorList.append( _("name") )
+
+                continue
 
 
                 # contact.childModels.append( nObject )
@@ -173,10 +175,10 @@ class Contact(models.Model):
 
                     contact.childModels.append( t )
 
-                    continue
-
                 except Exception as e:
                     contact.errorList.append( Tel._meta.verbose_name )
+
+                continue
 
 
             if( property.name.upper() == "ADR" ):
@@ -201,10 +203,10 @@ class Contact(models.Model):
 
                     contact.childModels.append( adr )
 
-                    continue
-
                 except Exception as e:
                     contact.errorList.append( Adr._meta.verbose_name )
+
+                continue
 
 
 
@@ -222,10 +224,10 @@ class Contact(models.Model):
 
                     contact.childModels.append( email )
 
-                    continue
-
                 except Exception as e:
                     contact.errorList.append( Email._meta.verbose_name )
+
+                continue
 
 
             if( property.name.upper() == "ORG" ):
@@ -238,10 +240,10 @@ class Contact(models.Model):
 
                     contact.childModels.append( org )
 
-                    continue
-
                 except Exception as e:
                     contact.errorList.append( Org._meta.verbose_name )
+
+                continue
 
 
             # ---------- OPTIONAL SINGLE VALUE NON TABLE PROPERTIES ---
@@ -256,8 +258,6 @@ class Contact(models.Model):
 
                     contact.bday = date( year, month, day )
 
-                    continue
-
                 except Exception as e:
                     try:
                         year  = int( property.value[0:4] )
@@ -266,29 +266,29 @@ class Contact(models.Model):
 
                         contact.bday = date( year, month, day )
 
-                        continue
-
                     except:
                         contact.errorList.append( contact._meta.get_field_by_name('bday')[0].verbose_name )
+
+                continue
+
 
             if( property.name.upper() == "CLASS" ):
                 try:
                     contact.classP = property.value
 
-                    continue
-
                 except Exception as e:
                     contact.errorList.append( Contact._meta.get_field_by_name('classP')[0].verbose_name )
 
+                continue
 
             if( property.name.upper() == "REV" ):
                 try:
                     contact.rev = datetime.fromtimestamp( int( re.match( '\\d+', property.value).group( 0 ) ) )
 
-                    continue
-
                 except:
                     Contact.errorList.append( Contact._meta.get_field_by_name('rev')[0].verbose_name )
+
+                continue
                 
             # note there is still a distinct possibility the timestamp is misread!
             # many formats exist for timestamps, that all have different starting times etc. 
@@ -298,19 +298,19 @@ class Contact(models.Model):
                 try:
                     contact.sort_string = property.value
 
-                    continue
-
                 except:
                     contact.errorList.append( Contact._meta.get_field_by_name('sort_string')[0].verbose_name )
 
+                continue
 
             if( property.name.upper() == "UID" ):
                 try:
                     contact.uid = property.value
 
-                    continue
                 except:
                     contact.errorList.append( Contact._meta.get_field_by_name('uid')[0].verbose_name )
+
+                continue
 
 
             # ---------- MULTI VALUE NON TABLE PROPERTIES-----------
@@ -322,10 +322,10 @@ class Contact(models.Model):
                     agent.data = property.value
                     contact.childModels.append( agent )
 
-                    continue
-
                 except:
                     contact.errorList.append( Agent._meta.verbose_name )
+
+                continue
 
             if( property.name.upper() == "CATEGORIES" ):
                 try:
@@ -334,10 +334,10 @@ class Contact(models.Model):
 
                     contact.childModels.append( categories )
 
-                    continue
-
                 except:
                     contact.errorList.append( Categories._meta.verbose_name )
+
+                continue
 
 
             if( property.name.upper() == "GEO" ):
@@ -348,11 +348,10 @@ class Contact(models.Model):
 
                     contact.childModels.append( geo )
 
-                    continue
-
                 except:
                     contact.errorList.append( Geo._meta.verbose_name )
 
+                continue
 
             if( property.name.upper() == "TZ" ):
                 try:
@@ -362,11 +361,10 @@ class Contact(models.Model):
 
                     contact.childModels.append( tz )
 
-                    continue
-
                 except:
                     contact.errorList.append( Tz._meta.verbose_name )
 
+                continue
 
             if( property.name.upper() == "KEY" ):
                 try:
@@ -376,10 +374,10 @@ class Contact(models.Model):
 
                     contact.childModels.append( key )
 
-                    continue
-
                 except:
                     contact.errorList.append( Key._meta.verbose_name )
+
+                continue
 
             if( property.name.upper() == "LABEL" ):
                 try:
@@ -389,10 +387,10 @@ class Contact(models.Model):
 
                     contact.childModels.append( label )
 
-                    continue
-
                 except:
                     contact.errorList.append( Label._meta.verbose_name )
+
+                continue
 
             if( property.name.upper() == "MAILER" ):
                 try:
@@ -402,10 +400,10 @@ class Contact(models.Model):
 
                     contact.childModels.append( mailer )
 
-                    continue
-
                 except:
                     contact.errorList.append( Mailer._meta.verbose_name )
+
+                continue
 
             if( property.name.upper() == "NICKNAME" ):
                 try:
@@ -415,10 +413,10 @@ class Contact(models.Model):
 
                     contact.childModels.append( nickname )
 
-                    continue
-
                 except:
                     contact.errorList.append( Nickname._meta.verbose_name )
+
+                continue
 
             if( property.name.upper() == "NOTE" ):
                 try:
@@ -428,10 +426,10 @@ class Contact(models.Model):
 
                     contact.childModels.append( note )
 
-                    continue
-
                 except:
                     contact.errorList.append( Note._meta.verbose_name )
+
+                continue
 
             # if( property.name.upper() == "PHOTO" ):
 
@@ -448,10 +446,10 @@ class Contact(models.Model):
 
                     contact.childModels.append( role )
 
-                    continue
-
                 except:
                     contact.errorList.append( Role._meta.verbose_name )
+
+                continue
 
             # if( property.name.upper() == "SOUND" ):
 
@@ -468,11 +466,10 @@ class Contact(models.Model):
 
                     contact.childModels.append( title )
 
-                    continue
-
                 except:
                     contact.errorList.append( Title._meta.verbose_name )
 
+                continue
 
             if( property.name.upper() == "URL" ):
                 try:
@@ -484,10 +481,10 @@ class Contact(models.Model):
 
                     contact.childModels.append( url )
 
-                    continue
-
                 except:
                     contact.errorList.append( Url._meta.verbose_name )
+
+                continue
 
             # if( property.name.upper() == "LOGO" ):
 
