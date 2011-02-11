@@ -140,11 +140,11 @@ class Contact(models.Model):
                 # nObject.contact = contact
 
                 try:
-                    family_name = property.value.family
-                    given_name = property.value.given
-                    additional_name = property.value.additional
-                    honorific_prefix = property.value.prefix
-                    honorific_suffix = property.value.suffix
+                    self.family_name = property.value.family
+                    self.given_name = property.value.given
+                    self.additional_name = property.value.additional
+                    self.honorific_prefix = property.value.prefix
+                    self.honorific_suffix = property.value.suffix
 
                     nFound = True
 

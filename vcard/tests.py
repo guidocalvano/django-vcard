@@ -6,6 +6,8 @@ Replace these with more appropriate tests for your application.
 """
 
 import logging, os
+import datetime
+from datetime import *
 
 from django.test import TestCase
 from vcard.models import Contact
@@ -74,7 +76,7 @@ N:family_name;given_name;additional_name;honorific_prefix;honorific_suffix\n\
 ADR;TYPE=WORK:post_office_box;extended_address;street_address;locality;region;postal_code;country\n\
 AGENT:agent\n\
 BDAY;value=date:2001-01-04\n\
-CATEGORY:category\n\
+CATEGORIES:category\n\
 CLASS:class\n\
 EMAIL;TYPE=PREF:forrestgump@example.com\n\
 GEO:geo\n\
@@ -82,7 +84,7 @@ KEY:key\n\
 LABEL:label\n\
 NICKNAME:nickname\n\
 NOTE:note\n\
-ORG:ABC, Inc.;North American Division\n\
+ORG:ABC;North American Division\n\
 REV:20080424T195243Z\n\
 ROLE:role\n\
 SORT-STRING:sort_string\n\
@@ -95,6 +97,8 @@ END:VCARD\n"
 
         all = Contact.importFrom( 'vCard', testVcard )
 
+        all.commit()
+
         self.assertEqual(all.fn, "Forrest Gump" )
         self.assertEqual(all.family_name, "family_name" )
         self.assertEqual(all.given_name, "given_name" )
@@ -103,7 +107,7 @@ END:VCARD\n"
         self.assertEqual(all.honorific_suffix, "honorific_suffix" )
 
         adr = all.adr_set.all()[ 0 ]
-        self.assertEqual( adr.post_office, "post_office" )
+        self.assertEqual( adr.post_office_box, "post_office_box" )
         self.assertEqual( adr.extended_address, "extended_address" )
         self.assertEqual( adr.street_address, "street_address" )
         self.assertEqual( adr.locality, "locality" )
@@ -113,15 +117,38 @@ END:VCARD\n"
 
         self.assertEqual( all.agent_set.all()[ 0 ].data, "agent" )
 
-        # bday still required!!!
+        self.assertEqual( all.bday, date( 2001, 1, 4 ) )
 
-        self.assertEqual( all.category_set.all()[ 0 ].data, "category" )
+        self.assertEqual( all.categories_set.all()[ 0 ].data, "category" )
         self.assertEqual( all.classP, "class" )
+
         self.assertEqual( all.email_set.all()[0].type,  "PREF" )
         self.assertEqual( all.email_set.all()[0].value,  "forrestgump@example.com" )
+        self.assertEqual( all.geo_set.all()[0].data,  u'geo' )
+        self.assertEqual( all.key_set.all()[0].data,  u'key' )
+        self.assertEqual( all.label_set.all()[0].data,  u'label' )
+        self.assertEqual( all.nickname_set.all()[0].data,  u'nickname' )
+        self.assertEqual( all.note_set.all()[0].data,  u'note' )
+
+        self.assertEqual( all.org_set.all()[0].organization_name,  u"ABC" )
+        self.assertEqual( all.org_set.all()[0].organization_unit,  u'North American Division' )
+
+        self.assertEqual( all.rev, datetime( 1970, 8, 21, 4, 53, 44 ) )
+
+	self.assertEqual( all.role_set.all()[0].data, u'role' )
+        self.assertEqual( all.sort_string, u'sort_string' )
+
+	self.assertEqual( all.tel_set.all()[0].value, u'(111) 555-1212' )
+	self.assertEqual( all.tel_set.all()[0].type, u'WORK' )
+
+	self.assertEqual( all.title_set.all()[0].data, "Shrimp Man" )
+	self.assertEqual( all.tz_set.all()[0].data, "tz" )
+
+        self.assertEqual( all.uid, "uid" )
+        self.assertEqual( all.url_set.all()[0].data, "http://www.google.com" )
 
         self.assertEqual( 'asdf', 'sdfg' )
-            
+
     def off_test_exportfiles(self):
         """ 
         See whether we can import and then export some files. 
