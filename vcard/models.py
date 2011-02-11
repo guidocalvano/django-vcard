@@ -133,8 +133,6 @@ class Contact(models.Model):
 
             if( property.name.upper() == "N" ):
 
-                nFound = True
-
                 # nObject = N()
 
                 # nObject.contact = contact
