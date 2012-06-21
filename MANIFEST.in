@@ -1,1 +1,2 @@
 include vcard/testdata/*.vcf
+recursive-include vcard/templates *.html
