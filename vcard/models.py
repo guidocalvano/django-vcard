@@ -696,12 +696,6 @@ class Contact(models.Model):
                                          verbose_name = _( "family name" ))
     given_name       = models.CharField( max_length = 1024,
                                          verbose_name = _("given name" ))
-    additional_name   = models.CharField( max_length = 1024,
-                                          verbose_name = _("additional name" ))
-    honorific_prefix = models.CharField( max_length = 1024,
-                                         verbose_name = _("honorific prefix" ))
-    honorific_suffix = models.CharField( max_length = 1024,
-                                         verbose_name = _("honorific suffix" ))
 
     # n = models.OneToOneField( 'N',
     #    unique = True,
@@ -718,6 +712,14 @@ class Contact(models.Model):
     # to the vcard specs 'koninginnendag'
     # is perfectly fine. That is why bday
     # is stored as a CharField
+
+    additional_name   = models.CharField( max_length = 1024,
+                                          verbose_name = _("additional name" ), blank=True)
+    honorific_prefix = models.CharField( max_length = 1024,
+                                         verbose_name = _("honorific prefix" ), blank=True)
+    honorific_suffix = models.CharField( max_length = 1024,
+                                         verbose_name = _("honorific suffix" ), blank=True)
+
     bday   = models.DateField(
        blank = True,
        null=True,
@@ -861,7 +863,7 @@ class Org( models.Model ):
     organization_name     = models.CharField( max_length = 1024,
                                       verbose_name = _("organization name" ))
     organization_unit     = models.CharField( max_length = 1024,
-                                      verbose_name = _("organization unit" ))
+                                      verbose_name = _("organization unit" ), blank=True)
 
 
 class Adr( models.Model ):
@@ -885,9 +887,9 @@ class Adr( models.Model ):
     contact = models.ForeignKey( Contact )
 
     post_office_box      = models.CharField( max_length = 1024,
-                                             verbose_name = _("post office box" ))
+                                             verbose_name = _("post office box" ), blank=True)
     extended_address     = models.CharField( max_length = 1024,
-                                             verbose_name = _("extended address"))
+                                             verbose_name = _("extended address"), blank=True)
     street_address       = models.CharField( max_length = 1024,
                                              verbose_name = _("street address" ))
     locality             = models.CharField( max_length = 1024,
