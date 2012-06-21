@@ -22,7 +22,7 @@ Tasks
 13. gitignore **done**
 14. pep8 **done? will probably have issues again, will look at it tomorrow** 
     gebruikte commando om whitespace om id's toe te staan;
-    `pep8 -r --count --ignore=E201,E202,E221,E251 django_vcard.py`
+    `pep8 -r --count --ignore=E201,E202,E221,E251 django_vcard.py`  **done**
 15. Remove application files in root directory (`manage.py`, `urls.py`, `templates`, `*.pyc`, etc.) **done**
 16. Unittests from `vcard/models.py` to `vcard/tests/__init__.py` **done**
 17. Sensible data types for (at least):
